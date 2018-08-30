@@ -5,7 +5,7 @@ import TableRow from './TableRow.js'
 // simple component because it simply renders the Table rows, does not have its own state or methods
 const Table = (props) => {
     return (
-        <div className="table">
+        // <div className="table">
         <table>
             <thead>
                 <tr>
@@ -20,17 +20,14 @@ const Table = (props) => {
                 {
                     // map the data, which is the array of rows passed down from App.js
                     // data was passed down from firebase and sorted in sortData function
-                    props.data.map((Row)=> {
+                    props.rows.map((Row)=> {
                         return <TableRow rowData={Row} pushToFirebase={props.pushToFirebase}/>
                     })
                     
                 }
             </tbody>
+     
         </table>
-
-            {/* button that has an onclick function of addRow, passed down from App.js */}
-            <button onClick={props.addRow}>Add Row</button>
-        </div>
     )
 }
 

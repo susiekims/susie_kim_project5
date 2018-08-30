@@ -53,13 +53,13 @@ class TableRow extends Component {
         })
 
         // call the pushToFirebase method, pass down current state of that row
-        this.pushToFirebase(this.state);
+        this.pushToFirebase(e.target.id, e.target.value, this.state);
     
     }
 
 
     render() {
-        console.log(this.state.key);
+        // console.log(this.state.key);
         return (
             // render Table Row which 5 different input
             // give the row a unique Key, which got it from firebase which was generated when the new Row was created
@@ -84,6 +84,7 @@ class TableRow extends Component {
                 </td>
                 <td><input type="text" id="earned" onChange={this.handleChange} value={this.state.earned}/></td>
                 <td><input type="text" id="spent" onChange={this.handleChange} value={this.state.spent}/></td>
+                <button>X</button>
             </tr>
            
         )

@@ -49,7 +49,7 @@ class App extends Component {
     console.log('add row');
       // create variable to represent new row
       // push that onto firebase
-      const newRowKey = dbRef.push({
+      const newRow = dbRef.push({
         key: '',
         item: '',
         date: '',
@@ -57,7 +57,7 @@ class App extends Component {
         earned: '',
         spent: ''
       })
-      console.log(newRowKey);
+      // console.log(newRow);
 
       // const NewRow = new TableRow();
       // NewRow.key = newRowKey;
@@ -73,6 +73,16 @@ class App extends Component {
     console.log('sort data');
 
     // create new array called rowArray from object which is passed down from .on('value')
+    if (obj === null) {
+      obj = {
+        key: '',
+        item: '',
+        date: '',
+        category: '',
+        earned: '',
+        spent: ''
+      };
+    } 
     const rowArray = Object.entries(obj).map((row) => {
       console.log(row);
 
@@ -80,7 +90,7 @@ class App extends Component {
       return ({
         key: row[0],
         item: row[1].item,
-        category: row[1].title,
+        category: row[1].category,
         date: row[1].date,
         earned: row[1].earned,
         spent: row[1].spent
@@ -97,13 +107,35 @@ class App extends Component {
 
   // function to push to firebase
   // accepts the parameter of data, which is the data contained in a row
-  pushToFirebase = (key, data) => {
+  pushToFirebase = (target, value, data) => {
     console.log('pushed to firebase');
-    console.log(key, data)
+    // console.log(data)
+    console.log(data.key);
 
     ////// this is broken! do something like this//////////
-    // create database ref that refers to key
-    // const row = firebase.database().ref(`/${key}`);
+    firebase.database().ref(`August/${data.key}`).once('value', (snapshot)=> {
+      console.log(snapshot.val());
+      // create variable represent current state of the firebase node
+      let currentVal = snapshot.val();
+
+      // assign = merging the current value with what i want to change
+      Object.assign(currentVal, {[target]:value});
+      console.log(currentVal);
+
+      //now set the data to the new value
+      firebase.database().ref(`August/${data.key}`).set(currentVal);
+    })
+    // .set({
+    //   [target]: value
+      // item: parsedData.item,
+      // key: parsedData.key,
+      // category: parsedData.title,
+      // date: parsedData.date,
+      // earned: parsedData.earned,
+      // spent: parsedData.spent
+    // });
+
+    // console.log(row);
     // row.set({
     //   [data.key]: data.value
     // })
@@ -120,7 +152,8 @@ class App extends Component {
          - pass on the prop data which is an array of objects that contain the data in the Rows
          - pass on the prop pushToFirebase, which is equal to pushToFirebase functon
         */}
-        <Table addRow={this.addRow} data={this.state.rows} pushToFirebase={this.pushToFirebase}/>
+        <Table rows={this.state.rows} pushToFirebase={this.pushToFirebase}/>
+        <button onClick={this.addRow}>Add Row</button>
         <section className="summary">
           <h2>Total earned:<span></span></h2>
           <h2>Total spent:<span></span></h2>
