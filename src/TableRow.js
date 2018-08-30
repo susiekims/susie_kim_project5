@@ -63,7 +63,7 @@ class TableRow extends Component {
         return (
             // render Table Row which 5 different input
             // give the row a unique Key, which got it from firebase which was generated when the new Row was created
-            <tr className="row" id={this.state.key}>
+            <tr className="row">
                 <td><input type="text" id="item" onChange={this.handleChange} value={this.state.item}/></td>
                 <td><input type="date" id="date" onChange={this.handleChange} value={this.state.date}/></td>
                 <td>
@@ -84,7 +84,9 @@ class TableRow extends Component {
                 </td>
                 <td><input type="text" id="earned" onChange={this.handleChange} value={this.state.earned}/></td>
                 <td><input type="text" id="spent" onChange={this.handleChange} value={this.state.spent}/></td>
-                <button>X</button>
+                <td>
+                    <button id={this.state.key} onClick={this.props.deleteRow}>X</button>
+                </td>
             </tr>
            
         )

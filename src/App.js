@@ -27,7 +27,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-        rows : [ TableRow ],
+        rows : [],
         // loading: false 
     }
   }
@@ -49,7 +49,9 @@ class App extends Component {
     console.log('add row');
       // create variable to represent new row
       // push that onto firebase
-      const newRow = dbRef.push({
+
+      // const newRow = 
+      dbRef.push({
         key: '',
         item: '',
         date: '',
@@ -68,23 +70,27 @@ class App extends Component {
       // })
   }
 
+  deleteRow = (e) => {
+    // console.log('deleting row' + key);
+    console.log(e.target.id);
+    console.log(this.state);
+    // const rowToDelete = e.target.id;
+    const rowRef = firebase.database().ref(`August/${e.target.id}`)
+    rowRef.remove();
+
+  
+  }
+
   // function to get data from variable and change it into more accessible form
   sortData = (obj) => {
-    console.log('sort data');
+    console.log('sort data called');
 
-    // create new array called rowArray from object which is passed down from .on('value')
+    // if there is nothing on the database, obj is empty row
     if (obj === null) {
-      obj = {
-        key: '',
-        item: '',
-        date: '',
-        category: '',
-        earned: '',
-        spent: ''
-      };
+      obj = {};
     } 
+    // create new array called rowArray from object which is passed down from .on('value')
     const rowArray = Object.entries(obj).map((row) => {
-      console.log(row);
 
       // each item in an array is an object which contain these properties
       return ({
@@ -152,7 +158,7 @@ class App extends Component {
          - pass on the prop data which is an array of objects that contain the data in the Rows
          - pass on the prop pushToFirebase, which is equal to pushToFirebase functon
         */}
-        <Table rows={this.state.rows} pushToFirebase={this.pushToFirebase}/>
+        <Table rows={this.state.rows} deleteRow={this.deleteRow} pushToFirebase={this.pushToFirebase}/>
         <button onClick={this.addRow}>Add Row</button>
         <section className="summary">
           <h2>Total earned:<span></span></h2>
