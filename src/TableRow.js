@@ -71,14 +71,10 @@ class TableRow extends Component {
                     <select id="category" onChange={this.handleChange} value={this.state.category}>
                         <option value="" disabled selected>Select category</option>
                         <option value="groceries">Groceries</option>
-                        <option value="eatingOut">Eating Out</option>
                         <option value="transportation">Transportation</option>
-                        <option value="housing">Housing</option>
-                        <option value="bills">Bills</option>
-                        <option value="health">Health</option>
-                        <option value="shopping">Shopping</option>
                         <option value="entertainment">Entertainment</option>
-                        <option value="misc">Misc</option>
+                        <option value="housing">Housing</option>
+                        <option value="income">Income</option>
                     </select>
                                     
                 </td>

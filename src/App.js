@@ -3,17 +3,10 @@ import './App.css';
 
 
 import Table from './Table'
-import TableRow from './TableRow'
+// import TableRow from './TableRow'
 import firebase from './firebase';
 
 const dbRef = firebase.database().ref('August');
-
-// get input from user for each item: name, date, category, amount
-// add event listener for button to add new row
-// when clicked, add new row
-// add up totals for each category
-// display totals for each
-// save budget so user can come back to it
 
 // have initial row already pushed into firebase with empty strings so data
 // everytime user creates a new row, push that row with empty strings to firebase
@@ -28,7 +21,14 @@ class App extends Component {
     super();
     this.state = {
         rows : [],
-        // loading: false 
+       categories : [
+          'groceries',
+          'transportation',
+          'income',
+          'entertainment',
+          // 'misc',
+          'housing'
+        ]
     }
   }
   componentDidMount() {
@@ -47,38 +47,24 @@ class App extends Component {
   // triggered onClick of button
   addRow = () => {
     console.log('add row');
-      // create variable to represent new row
-      // push that onto firebase
 
-      // const newRow = 
+    // push an empty row onto firebase
       dbRef.push({
         key: '',
         item: '',
         date: '',
         category: '',
         earned: '',
-        spent: ''
+        spent: '',
       })
-      // console.log(newRow);
 
-      // const NewRow = new TableRow();
-      // NewRow.key = newRowKey;
-      // console.log(TableRow);
-      // rows.push(NewRow);
-      // this.setState({
-      //     rows: rows
-      // })
   }
 
   deleteRow = (e) => {
-    // console.log('deleting row' + key);
-    console.log(e.target.id);
-    console.log(this.state);
-    // const rowToDelete = e.target.id;
+    console.log('deleting row');
+    // console.log(e.target.id);
     const rowRef = firebase.database().ref(`August/${e.target.id}`)
     rowRef.remove();
-
-  
   }
 
   // function to get data from variable and change it into more accessible form
@@ -98,8 +84,8 @@ class App extends Component {
         item: row[1].item,
         category: row[1].category,
         date: row[1].date,
-        earned: row[1].earned,
-        spent: row[1].spent
+        earned: row[1].earned && parseInt(row[1].earned),
+        spent: row[1].spent && parseInt(row[1].spent)
         
       });
     })
@@ -109,6 +95,34 @@ class App extends Component {
       rows: rowArray
     })
     console.log(rowArray);
+    // this.displayData(rowArray);
+
+    this.state.categories.forEach((category)=> {
+      this.displayData(rowArray, category);
+    })
+
+
+  }
+
+  displayData = (data, category) => {
+    let filteredData = data.filter((row) => {
+      return row.category === category && row.spent ;
+    })
+    console.log(filteredData, category);
+    if (filteredData.length > 0) {
+
+      const arrayOfNumber = filteredData.map((row)=> {
+      
+        return row.spent;
+      })
+      console.log(arrayOfNumber, category);
+      
+      let total = arrayOfNumber.reduce((a, b) => a + b, 0);
+      // console.log(total);
+      document.getElementById(`total-${category}`).innerHTML = '$' + total;
+
+    }
+    
   }
 
   // function to push to firebase
@@ -118,7 +132,6 @@ class App extends Component {
     // console.log(data)
     console.log(data.key);
 
-    ////// this is broken! do something like this//////////
     firebase.database().ref(`August/${data.key}`).once('value', (snapshot)=> {
       console.log(snapshot.val());
       // create variable represent current state of the firebase node
@@ -131,20 +144,6 @@ class App extends Component {
       //now set the data to the new value
       firebase.database().ref(`August/${data.key}`).set(currentVal);
     })
-    // .set({
-    //   [target]: value
-      // item: parsedData.item,
-      // key: parsedData.key,
-      // category: parsedData.title,
-      // date: parsedData.date,
-      // earned: parsedData.earned,
-      // spent: parsedData.spent
-    // });
-
-    // console.log(row);
-    // row.set({
-    //   [data.key]: data.value
-    // })
   }
 
   render() {
@@ -161,8 +160,13 @@ class App extends Component {
         <Table rows={this.state.rows} deleteRow={this.deleteRow} pushToFirebase={this.pushToFirebase}/>
         <button onClick={this.addRow}>Add Row</button>
         <section className="summary">
-          <h2>Total earned:<span></span></h2>
-          <h2>Total spent:<span></span></h2>
+          <h2>Total earned: <span id="total-earned"></span></h2>
+          <h2>Total spent: <span id="total-epent"></span></h2>
+          <h3>Total spent on groceries: <span id="total-groceries"></span></h3>
+          <h3>Total spent on transportation: <span id="total-transportation"></span></h3>
+          <h3>Total spent on entertainment: <span id="total-entertainment"></span></h3>
+          <h3>Total spent on housing: <span id="total-housing"></span></h3>
+          <h3>Total spent on income: <span id="total-income"></span></h3>
         </section>
       </div>
     );
