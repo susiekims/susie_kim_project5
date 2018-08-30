@@ -26,9 +26,15 @@ class App extends Component {
           'transportation',
           'income',
           'entertainment',
-          // 'misc',
           'housing'
-        ]
+        ],
+        totals: {
+          groceries: 0,
+          transportation: 0,
+          income: 0,
+          entertainment: 0,
+          housing: 0
+        }
     }
   }
   componentDidMount() {
@@ -98,11 +104,26 @@ class App extends Component {
     // this.displayData(rowArray);
 
     this.state.categories.forEach((category)=> {
-      this.displayData(rowArray, category);
+      if (category === 'income') {
+        this.displayIncome(rowArray);
+      } else {
+        this.displayData(rowArray, category);
+      }
     })
 
 
   }
+
+  displayIncome = (data) => {
+    console.log('display income');
+    let totalIncome = data.filter((row)=> {
+      return row.category === 'income' && row.earned;
+    }).map((row) => {
+      return row.earned
+    }).reduce((a,b) => a + b, 0);
+    console.log(totalIncome, "total income");
+    document.getElementById('total-earned').innerHTML = '$' + totalIncome.toFixed(2);
+  } 
 
   displayData = (data, category) => {
     let filteredData = data.filter((row) => {
@@ -119,7 +140,15 @@ class App extends Component {
       
       let total = arrayOfNumber.reduce((a, b) => a + b, 0);
       // console.log(total);
-      document.getElementById(`total-${category}`).innerHTML = '$' + total;
+  
+      this.setState({
+        totals: {
+          ...this.state.totals,
+          [category]: total,
+        }
+      }) 
+      // totals {...this.state.totals, [category]: total}
+      document.getElementById(`total-${category}`).innerHTML = '$' + total.toFixed(2);
 
     }
     
@@ -161,12 +190,11 @@ class App extends Component {
         <button onClick={this.addRow}>Add Row</button>
         <section className="summary">
           <h2>Total earned: <span id="total-earned"></span></h2>
-          <h2>Total spent: <span id="total-epent"></span></h2>
+          <h2>Total spent: <span id="total-spent"></span></h2>
           <h3>Total spent on groceries: <span id="total-groceries"></span></h3>
           <h3>Total spent on transportation: <span id="total-transportation"></span></h3>
           <h3>Total spent on entertainment: <span id="total-entertainment"></span></h3>
           <h3>Total spent on housing: <span id="total-housing"></span></h3>
-          <h3>Total spent on income: <span id="total-income"></span></h3>
         </section>
       </div>
     );
