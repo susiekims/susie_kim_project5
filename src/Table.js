@@ -1,6 +1,8 @@
 import React from 'react';
 import TableRow from './TableRow.js'
 
+// create new simple component Table that accepts a props parameter
+// simple component because it simply renders the Table rows, does not have its own state or methods
 const Table = (props) => {
     return (
         <div className="table">
@@ -16,13 +18,17 @@ const Table = (props) => {
             </thead>
             <tbody>
                 {
-                props.data.map((Row)=> {
-                    return <TableRow rowData={Row}/>
-                })
-
+                    // map the data, which is the array of rows passed down from App.js
+                    // data was passed down from firebase and sorted in sortData function
+                    props.data.map((Row)=> {
+                        return <TableRow rowData={Row} pushToFirebase={props.pushToFirebase}/>
+                    })
+                    
                 }
             </tbody>
         </table>
+
+            {/* button that has an onclick function of addRow, passed down from App.js */}
             <button onClick={props.addRow}>Add Row</button>
         </div>
     )

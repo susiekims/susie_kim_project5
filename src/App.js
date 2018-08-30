@@ -15,14 +15,15 @@ const dbRef = firebase.database().ref('August');
 // display totals for each
 // save budget so user can come back to it
 
-
 // have initial row already pushed into firebase with empty strings so data
 // everytime user creates a new row, push that row with empty strings to firebase
 // get the unique key back for that row
 // when user updates that row, set the values for that row according to the user changes instead of pushing a new item to the database
 
-
+// create App class
 class App extends Component {
+  // create default state
+  // state has a property of rows which is an array that contains the class TableRow
   constructor() {
     super();
     this.state = {
@@ -30,38 +31,32 @@ class App extends Component {
         // loading: false 
     }
   }
-
   componentDidMount() {
     console.log('App component did mount');
 
     // add event listeneer to tell us if the database has anything on load and when anything changes
     dbRef.on('value', (snapshot) => {
       console.log(snapshot.val());
+
+      // pass the value of the snapshot into sortData()
       this.sortData(snapshot.val());
     });
   }
 
-  pushToFirebase = (key, data) => {
-    // create database ref that refers to key
-    const row = firebase.database().ref(`/${key}`)
-    row.set({
-      [data.key]: data.value
-    })
-  }
-
+  // function to addRow to table
+  // triggered onClick of button
   addRow = () => {
     console.log('add row');
-    // console.log(row);
-    // clone existing array
-      // const rows = Array.from(this.state.rows);
+      // create variable to represent new row
+      // push that onto firebase
       const newRowKey = dbRef.push({
+        key: '',
         item: '',
         date: '',
         category: '',
         earned: '',
         spent: ''
-      }).key;
-
+      })
       console.log(newRowKey);
 
       // const NewRow = new TableRow();
@@ -73,11 +68,15 @@ class App extends Component {
       // })
   }
 
+  // function to get data from variable and change it into more accessible form
   sortData = (obj) => {
     console.log('sort data');
 
+    // create new array called rowArray from object which is passed down from .on('value')
     const rowArray = Object.entries(obj).map((row) => {
       console.log(row);
+
+      // each item in an array is an object which contain these properties
       return ({
         key: row[0],
         item: row[1].item,
@@ -88,20 +87,26 @@ class App extends Component {
         
       });
     })
-        this.setState({
-            rows: rowArray
-          })
-      console.log(rowArray);
-  }
-  setLoading = () => {
+    // change the state of App
+    // reassign value of rows to rowArray
     this.setState({
-      loading: true
+      rows: rowArray
     })
+    console.log(rowArray);
   }
-  stopLoading = () => {
-    this.setState({
-      loading: false
-    })
+
+  // function to push to firebase
+  // accepts the parameter of data, which is the data contained in a row
+  pushToFirebase = (key, data) => {
+    console.log('pushed to firebase');
+    console.log(key, data)
+
+    ////// this is broken! do something like this//////////
+    // create database ref that refers to key
+    // const row = firebase.database().ref(`/${key}`);
+    // row.set({
+    //   [data.key]: data.value
+    // })
   }
 
   render() {
@@ -110,7 +115,12 @@ class App extends Component {
         <header>
           <h1>Susie's Super Cool Budget App</h1>
         </header>
-        <Table addRow={this.addRow} data={this.state.rows} />
+        {/* render Table element
+         - pass on the prop addRow which is equal to addRow function
+         - pass on the prop data which is an array of objects that contain the data in the Rows
+         - pass on the prop pushToFirebase, which is equal to pushToFirebase functon
+        */}
+        <Table addRow={this.addRow} data={this.state.rows} pushToFirebase={this.pushToFirebase}/>
         <section className="summary">
           <h2>Total earned:<span></span></h2>
           <h2>Total spent:<span></span></h2>
@@ -120,4 +130,5 @@ class App extends Component {
   }
 }
 
+// export app to be used in DOM
 export default App;
