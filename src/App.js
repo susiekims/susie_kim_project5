@@ -25,7 +25,6 @@ class App extends Component {
       categories : [
         'groceries',
         'transportation',
-        'income',
         'entertainment',
         'housing'
       ],
@@ -37,22 +36,24 @@ class App extends Component {
         housing: 0,
         spending: 0
       },
-      data: {
-        labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
-        datasets: [{
-          label: "My First dataset",
-          backgroundColor: ['red','yellow','green','blue'],
-          data: [10, 10 , 10, 10],
-        }]
-      }
+      // data: {
+      //   labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
+      //   datasets: [{
+      //     label: "My First dataset",
+      //     backgroundColor: ['red','yellow','green','blue'],
+      //     data: [10, 10 , 10, 10],
+      //   }]
+      // }
     }
   }
+
+
   componentDidMount() {
-    console.log('App component did mount');
+    //console.log('App component did mount');
 
     // add event listeneer to tell us if the database has anything on load and when anything changes
     dbRef.on('value', (snapshot) => {
-      console.log(snapshot.val());
+    //  console.log(snapshot.val());
 
       // pass the value of the snapshot into sortData()
       this.sortData(snapshot.val());
@@ -62,7 +63,7 @@ class App extends Component {
   // function to addRow to table
   // triggered onClick of button
   addRow = () => {
-    console.log('add row');
+   // console.log('add row');
 
     // push an empty row onto firebase
       dbRef.push({
@@ -77,7 +78,7 @@ class App extends Component {
   }
 
   deleteRow = (e) => {
-    console.log('deleting row');
+    //.log('deleting row');
     // console.log(e.target.id);
     const rowRef = firebase.database().ref(`August/${e.target.id}`)
     rowRef.remove();
@@ -85,7 +86,7 @@ class App extends Component {
 
   // function to get data from variable and change it into more accessible form
   sortData = (obj) => {
-    console.log('sort data called');
+   // console.log('sort data called');
 
     // if there is nothing on the database, obj is empty row
     if (obj === null) {
@@ -109,35 +110,29 @@ class App extends Component {
     // reassign value of rows to rowArray
     this.setState({
       rows: rowArray
-    })
-    console.log(rowArray);
-    // this.displayData(rowArray);
+    },() => {
 
-    this.state.categories.forEach((category)=> {
-        this.getTotals(rowArray, category);
-    })
+      this.getTotals(rowArray);
 
-    this.getIncome(rowArray);
-    this.getTotalSpending(rowArray);
+    })
 
   }
 
   getIncome = (data) => {
-    console.log('getting income');
+    //console.log('getting income');
     let totalIncome = data.filter((row)=> {
+      console.log(row.earned)
       return row.earned > 0;
     }).map((row) => {
       return row.earned;
-    }).reduce((a,b)=> a + b, 0);
+    })
+    .reduce((a,b)=> a + b, 0);
 
-    console.log(totalIncome)
-    this.setState({
-      totals: {
-        ...this.state.totals,
-        income: totalIncome,
-      }
-    }) 
-    document.getElementById(`total-earned`).innerHTML = '$' + totalIncome.toFixed(2); 
+    console.log('total',totalIncome)
+    const totals = Object.assign(this.state.totals,{income: totalIncome});
+
+    this.setState({totals}) 
+    // document.getElementById(`total-earned`).innerHTML = '$' + totalIncome.toFixed(2); 
   }
 
   getTotalSpending = (data) => {
@@ -146,61 +141,73 @@ class App extends Component {
     }).map((row)=> {
       return row.spent;
     }).reduce((a,b) => a + b, 0);
-    console.log(totalSpending)
+    // console.log(totalSpending)
     this.setState({
       totals: {
         ...this.state.totals,
         spending: totalSpending,
       }
     });
-    document.getElementById(`total-spent`).innerHTML = '$' + totalSpending.toFixed(2); 
+    // document.getElementById(`total-spent`).innerHTML = '$' + totalSpending.toFixed(2); 
   }
 
  
 
-  getTotals = (data, category) => {
-    let filteredData = data.filter((row) => {
-      return row.category === category && row.spent ;
-    })
-    if (filteredData.length > 0) {
+  getTotals = (data) => {
+    let totals = Object.assign(this.state.totals);
+    //loop totals and forEAch cat add it
+    Object.keys(totals).forEach((cat) => {
+      let filteredData = data.filter((row) => {
+        return row.category === cat && row.spent ;
+      })
       const arrayOfNumber = filteredData.map((row)=> {
         return row.spent;
       })
       let total = arrayOfNumber.reduce((a, b) => a + b, 0);
-      this.setState({
-        totals: {
-          ...this.state.totals,
-          [category]: total,
-        }
-      
-      }) 
-      document.getElementById(`total-${category}`).innerHTML = '$' + total.toFixed(2);
-    }
-    
+      totals[cat] = total;
+    })
+    this.setState({totals},() => {
+      this.getIncome(data);
+      this.getTotalSpending(data);
+
+    }) 
   }
 
   // function to push to firebase
   // accepts the parameter of data, which is the data contained in a row
   pushToFirebase = (target, value, data) => {
-    console.log('pushed to firebase');
+    //console.log('pushed to firebase');
     // console.log(data)
-    console.log(data.key);
+    // console.log(data.key);
 
     firebase.database().ref(`August/${data.key}`).once('value', (snapshot)=> {
-      console.log(snapshot.val());
+      // console.log(snapshot.val());
       // create variable represent current state of the firebase node
       let currentVal = snapshot.val();
 
       // assign = merging the current value with what i want to change
       Object.assign(currentVal, {[target]:value});
-      console.log(currentVal);
+      // console.log(currentVal);
 
       //now set the data to the new value
       firebase.database().ref(`August/${data.key}`).set(currentVal);
     })
+
+
+
   }
 
   render() {
+    const chartData = {
+      labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
+      datasets: [{
+        label: "My First dataset",
+        backgroundColor: ['red','yellow','green','blue'],
+        data: [this.state.totals.groceries, this.state.totals.transportation , this.state.totals.entertainment, this.state.totals.housing],
+      }]
+    }
+    console.log(this.state.totals.groceries, "in App.js")
+
     return (
       <div className="App">
         <header>
@@ -215,14 +222,14 @@ class App extends Component {
         <button onClick={this.addRow}>Add Row</button>
 
         <div className='summary-container'>
-          <Chart totals={this.state.totals} chartData={this.state.data} />
+          <Chart totals={this.state.totals} chartData={chartData}/>
           <section className="summary">
-            <h2>Total earned: <span id="total-earned"></span></h2>
-            <h2>Total spent: <span id="total-spent"></span></h2>
-            <h3>Total spent on groceries: <span id="total-groceries"></span></h3>
-            <h3>Total spent on transportation: <span id="total-transportation"></span></h3>
-            <h3>Total spent on entertainment: <span id="total-entertainment"></span></h3>
-            <h3>Total spent on housing: <span id="total-housing"></span></h3>
+            <h2>Total earned: <span id="total-earned">{this.state.totals.income}</span></h2>
+            <h2>Total spent: <span id="total-spent">{this.state.totals.spending}</span></h2>
+            <h3>Total spent on groceries: <span id="total-groceries">{this.state.totals.groceries}</span></h3>
+            <h3>Total spent on transportation: <span id="total-transportation">{this.state.totals.transportation}</span></h3>
+            <h3>Total spent on entertainment: <span id="total-entertainment">{this.state.totals.entertainment}</span></h3>
+            <h3>Total spent on housing: <span id="total-housing">{this.state.totals.housing}</span></h3>
           </section>
         </div>
       </div>
