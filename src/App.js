@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 
-import Table from './Table'
+import Chart from './Chart';
+import Table from './Table';
 // import TableRow from './TableRow'
 import firebase from './firebase';
 
@@ -20,21 +21,30 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-        rows : [],
-       categories : [
-          'groceries',
-          'transportation',
-          'income',
-          'entertainment',
-          'housing'
-        ],
-        totals: {
-          groceries: 0,
-          transportation: 0,
-          income: 0,
-          entertainment: 0,
-          housing: 0
-        }
+      rows : [],
+      categories : [
+        'groceries',
+        'transportation',
+        'income',
+        'entertainment',
+        'housing'
+      ],
+      totals: {
+        groceries: 0,
+        transportation: 0,
+        income: 0,
+        entertainment: 0,
+        housing: 0,
+        spending: 0
+      },
+      data: {
+        labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
+        datasets: [{
+          label: "My First dataset",
+          backgroundColor: ['red','yellow','green','blue'],
+          data: [10, 10 , 10, 10],
+        }]
+      }
     }
   }
   componentDidMount() {
@@ -104,52 +114,67 @@ class App extends Component {
     // this.displayData(rowArray);
 
     this.state.categories.forEach((category)=> {
-      if (category === 'income') {
-        this.displayIncome(rowArray);
-      } else {
-        this.displayData(rowArray, category);
-      }
+        this.getTotals(rowArray, category);
     })
 
+    this.getIncome(rowArray);
+    this.getTotalSpending(rowArray);
 
   }
 
-  displayIncome = (data) => {
-    console.log('display income');
+  getIncome = (data) => {
+    console.log('getting income');
     let totalIncome = data.filter((row)=> {
-      return row.category === 'income' && row.earned;
+      return row.earned > 0;
     }).map((row) => {
-      return row.earned
-    }).reduce((a,b) => a + b, 0);
-    console.log(totalIncome, "total income");
-    document.getElementById('total-earned').innerHTML = '$' + totalIncome.toFixed(2);
-  } 
+      return row.earned;
+    }).reduce((a,b)=> a + b, 0);
 
-  displayData = (data, category) => {
+    console.log(totalIncome)
+    this.setState({
+      totals: {
+        ...this.state.totals,
+        income: totalIncome,
+      }
+    }) 
+    document.getElementById(`total-earned`).innerHTML = '$' + totalIncome.toFixed(2); 
+  }
+
+  getTotalSpending = (data) => {
+    let totalSpending = data.filter((row)=> {
+      return row.spent > 0;
+    }).map((row)=> {
+      return row.spent;
+    }).reduce((a,b) => a + b, 0);
+    console.log(totalSpending)
+    this.setState({
+      totals: {
+        ...this.state.totals,
+        spending: totalSpending,
+      }
+    });
+    document.getElementById(`total-spent`).innerHTML = '$' + totalSpending.toFixed(2); 
+  }
+
+ 
+
+  getTotals = (data, category) => {
     let filteredData = data.filter((row) => {
       return row.category === category && row.spent ;
     })
-    console.log(filteredData, category);
     if (filteredData.length > 0) {
-
       const arrayOfNumber = filteredData.map((row)=> {
-      
         return row.spent;
       })
-      console.log(arrayOfNumber, category);
-      
       let total = arrayOfNumber.reduce((a, b) => a + b, 0);
-      // console.log(total);
-  
       this.setState({
         totals: {
           ...this.state.totals,
           [category]: total,
         }
+      
       }) 
-      // totals {...this.state.totals, [category]: total}
       document.getElementById(`total-${category}`).innerHTML = '$' + total.toFixed(2);
-
     }
     
   }
@@ -188,14 +213,18 @@ class App extends Component {
         */}
         <Table rows={this.state.rows} deleteRow={this.deleteRow} pushToFirebase={this.pushToFirebase}/>
         <button onClick={this.addRow}>Add Row</button>
-        <section className="summary">
-          <h2>Total earned: <span id="total-earned"></span></h2>
-          <h2>Total spent: <span id="total-spent"></span></h2>
-          <h3>Total spent on groceries: <span id="total-groceries"></span></h3>
-          <h3>Total spent on transportation: <span id="total-transportation"></span></h3>
-          <h3>Total spent on entertainment: <span id="total-entertainment"></span></h3>
-          <h3>Total spent on housing: <span id="total-housing"></span></h3>
-        </section>
+
+        <div className='summary-container'>
+          <Chart totals={this.state.totals} chartData={this.state.data} />
+          <section className="summary">
+            <h2>Total earned: <span id="total-earned"></span></h2>
+            <h2>Total spent: <span id="total-spent"></span></h2>
+            <h3>Total spent on groceries: <span id="total-groceries"></span></h3>
+            <h3>Total spent on transportation: <span id="total-transportation"></span></h3>
+            <h3>Total spent on entertainment: <span id="total-entertainment"></span></h3>
+            <h3>Total spent on housing: <span id="total-housing"></span></h3>
+          </section>
+        </div>
       </div>
     );
   }
