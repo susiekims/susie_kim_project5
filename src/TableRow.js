@@ -34,6 +34,8 @@ class TableRow extends Component {
 
 
     render() {
+        const categories = this.props.categories;
+        // console.log('categories', categories);
         return (
             // render Table Row which 5 different input
             // give the row a unique Key, which got it from firebase which was generated when the new Row was created
@@ -43,11 +45,19 @@ class TableRow extends Component {
                 <td>
                     <select id="category" onChange={this.handleChange} value={this.state.category}>
                         <option value="" disabled selected>Select category</option>
-                        <option value="groceries">Groceries</option>
+                        {/* <option value="groceries">Groceries</option>
                         <option value="transportation">Transportation</option>
                         <option value="entertainment">Entertainment</option>
                         <option value="housing">Housing</option>
+                        <option value="income">Income</option> */}
                         <option value="income">Income</option>
+                        {
+                            this.props.categories.map((category) => {
+                                return (
+                                    <option value={category.name}>{category.name}</option>
+                                )
+                            })
+                        }
                     </select>                                    
                 </td>
                 <td><input type="text" id="earned" onChange={this.handleChange} value={this.state.earned}/></td>

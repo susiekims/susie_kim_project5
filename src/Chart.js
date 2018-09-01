@@ -35,7 +35,7 @@ class Chart extends Component {
     // }
 
     render() {
-        console.log(this.props.totals, "chart!!!");
+        // console.log(this.props.totals, "chart!!!");
         // const chartData = {
         //     labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
         //     datasets: [{

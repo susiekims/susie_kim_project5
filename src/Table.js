@@ -21,7 +21,14 @@ const Table = (props) => {
                     // map the data, which is the array of rows passed down from App.js
                     // data was passed down from firebase and sorted in sortData function
                     props.rows.map((Row)=> {
-                        return <TableRow key={Row.key} deleteRow={props.deleteRow} rowData={Row} pushToFirebase={props.pushToFirebase}/>
+                        return (
+                            <TableRow key={Row.key} 
+                                deleteRow={props.deleteRow} 
+                                rowData={Row} 
+                                pushToFirebase={props.pushToFirebase}
+                                categories={props.categories}
+                            />
+                        )
                     })
                     
                 }
