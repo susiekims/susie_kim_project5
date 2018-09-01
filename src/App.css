@@ -61,3 +61,12 @@ td {
   width: 50%;
 }
 
+.budget {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.budget-card {
+  width: 300px;
+}

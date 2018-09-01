@@ -44,7 +44,7 @@ class TableRow extends Component {
                 <td><input type="date" id="date" onChange={this.handleChange} value={this.state.date}/></td>
                 <td>
                     <select id="category" onChange={this.handleChange} value={this.state.category}>
-                        <option value="" disabled selected>Select category</option>
+                        <option value="" defaultValue="">Select category</option>
                         {/* <option value="groceries">Groceries</option>
                         <option value="transportation">Transportation</option>
                         <option value="entertainment">Entertainment</option>
@@ -52,9 +52,9 @@ class TableRow extends Component {
                         <option value="income">Income</option> */}
                         <option value="income">Income</option>
                         {
-                            this.props.categories.map((category) => {
+                            categories.map((category) => {
                                 return (
-                                    <option value={category.name}>{category.name}</option>
+                                    <option key={category.key} value={category.name}>{category.name}</option>
                                 )
                             })
                         }
