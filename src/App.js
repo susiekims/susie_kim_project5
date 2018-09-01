@@ -26,37 +26,7 @@ class App extends Component {
     super();
     this.state = {
       rows : [],
-      // categories : [
-      //   {
-      //     name:'groceries',
-      //     budget: 0,
-      //     color: '',
-      //   },
-      //   {
-      //     name: 'transportation',
-      //     budget: 0,
-      //     color: '',
-      //   },
-      //   {
-      //     name: 'entertainment',
-      //     budget: 0,
-      //     color: '',
-      //   },
-      //   {
-      //     name: 'housing',
-      //     budget: 0,
-      //     color: '',
-      //   }
-      // ],
-      categories: ['bills', 'Entertainment'],
-      // totals: {
-      //   groceries: 0,
-      //   transportation: 0,
-      //   income: 0,
-      //   entertainment: 0,
-      //   housing: 0,
-      //   spending: 0
-      // },
+      categories: [],
       totals: {}
     }
   }
@@ -94,6 +64,8 @@ class App extends Component {
 
   }
 
+  // gets the id of the row user clicked the delete button on
+  // removes that row from firebase
   deleteRow = (e) => {
     const rowRef = firebase.database().ref(`September/${e.target.id}`)
     rowRef.remove();
@@ -126,8 +98,8 @@ class App extends Component {
     })
   }
 
+  // function to get total amount of earned
   getIncome = (data) => {
-    //console.log('getting income');
     let totalIncome = data.filter((row)=> {
       return row.earned > 0;
     }).map((row) => {
@@ -135,94 +107,98 @@ class App extends Component {
     })
     .reduce((a,b)=> a + b, 0);
 
-    // console.log('total',totalIncome)
-
-    // dont change this!!! the code will break!!!!
+    /////// dont change this!!! the code will break!!!! ////////////
     const totals = Object.assign(this.state.totals,{income: totalIncome});
-    //////////
+    ////////////////////////////////////////////////////////////////
 
     this.setState({totals}) 
-    // document.getElementById(`total-earned`).innerHTML = '$' + totalIncome.toFixed(2); 
   }
 
+  /// get total amount spent
   getTotalSpending = (data) => {
     let totalSpending = data.filter((row)=> {
       return row.spent > 0;
     }).map((row)=> {
       return row.spent;
     }).reduce((a,b) => a + b, 0);
-    // console.log(totalSpending)
     this.setState({
       totals: {
         ...this.state.totals,
         spending: totalSpending,
       }
     });
-    // document.getElementById(`total-spent`).innerHTML = '$' + totalSpending.toFixed(2); 
   }
 
   getTotals = (data) => {
-    // console.log(data, 'DATA!!!!');
-    // let totals = Object.assign(this.state.totals);
-    // // console.log(totals);
     
+    /// MY CODE 
+    let totals = this.state.totals
+    let categories = this.state.categories;
+    // console.log(categories);   
+      categories.forEach((category)=> {
+        let total = data.filter((row)=> {
+          return row.category === category.name;
+        }).map((row) => {
+          return row.spent;
+        }).reduce((a,b) => a + b, 0);
+          console.log(category.name, total); /// these values are great!!!!! they are what i am looking for!!
+       /// HOW DO I UPDATE THE STATE WITH THESE VALUES?????????????????
+        this.setState({
+          totals: {
+              ...this.state.totals,
+              [category.name]: total,
+          }, 
+        })
+      });
+      // in the for loop though, everytime it runs it's overwriting the previous category, BUT WHY??? 
+      // i think what's happening here is that getIncome and getTotalSpending are overwriting the total categories, again BUT WHY
     
-    // let categories = this.state.categories;
-    
-    // /// MY CODE 
-    //   categories.forEach((category)=> {
-    //       let total = data.filter((row)=> {
-    //           return row.category === category.name;
-    //         }).map((row) => {
-    //             return row.spent;
-    //           }).reduce((a,b) => a + b, 0);
-    //           // totals = Object.assign(this.state.totals,{[category]: totals});
-
-    //           console.log(category.name, total); /// these values are great!!!!! they are what i am looking for!!
-    //           /// HOW DO I UPDATE THE STATE WITH THESE VALUES?????????????????
-    //   });
           
-    // RYANS CODE
-    let totals = Object.assign(this.state.totals);
-    Object.keys(totals).forEach((category) => {
-      console.log(totals);
-      let filteredData = data.filter((row) => {
-        console.log(category);
-        return row.category === category && row.spent ;
-      })
-      const arrayOfNumber = filteredData.map((row)=> {
-        return row.spent;
-      })
-      let total = arrayOfNumber.reduce((a, b) => a + b, 0);
-      totals[category] = total;
-    })
+    //////////////// RYANS CODE /////////////////
+    // let totals = Object.assign(this.state.totals);
+    // Object.keys(totals).forEach((category) => {
+    //   console.log(totals);
+    //   let filteredData = data.filter((row) => {
+    //     console.log(category);
+    //     return row.category === category && row.spent ;
+    //   })
+    //   const arrayOfNumber = filteredData.map((row)=> {
+    //     return row.spent;
+    //   })
+    //   let total = arrayOfNumber.reduce((a, b) => a + b, 0);
+    //   totals[category] = total;
+    // })
+    // this.setState({totals}
+    // ,() => {
+    // this.getIncome(data);
+    // this.getTotalSpending(data);
+    // });
 
-
-    // TIMURS CODE
-    // Object.keys(data).forEach(i => {
+    ///////////// TIMURS CODE ////////////////
+    // let obj = {};
+    // let totals = Object.assign(this.state.totals);
+    // Object.keys(totals).forEach(i => {
     //     const smallCat = data[i];
     //     console.log(smallCat);
     //     obj[smallCat.category] = smallCat.spent
-    //   })
-      this.setState({totals}
-      ,() => {
-        this.getIncome(data);
-        this.getTotalSpending(data);
-      }) 
+    // })
+    // this.setState({totals, obj}
+    //   , () => {
+    //   this.getIncome(data);
+    //   this.getTotalSpending(data);
+    // });
   }
  
-
   // function to push to firebase
   // accepts the parameter of data, which is the data contained in a row
   pushToFirebase = (target, value, data) => {
     firebase.database().ref(`September/${data.key}`).once('value', (snapshot)=> {
-      // console.log(snapshot.val());
+
       // create variable represent current state of the firebase node
       let currentVal = snapshot.val();
-      // if (currentVal) {
-        // assign = merging the current value with what i want to change
+
+        // merging the current value with what i want to change
         Object.assign(currentVal, {[target]:value});
-        // console.log(currentVal);
   
         //now set the data to the new value
         firebase.database().ref(`September/${data.key}`).set(currentVal);
@@ -234,15 +210,10 @@ class App extends Component {
   }
   
   sortCategories = (obj) => {
-    // categoriesRef.on('value',(snapshot)=> {
-    // console.log(Object.entries(snapshot.val())  );
-  
-    // let data = snapshot.val();
     if (obj === null) {
       obj = {};
     }
       
-    console.log(Object.entries(obj));
     const categoriesArray = Object.entries(obj).map((category)=> {
       return ({
         key: category[0],
@@ -255,26 +226,23 @@ class App extends Component {
     this.setState({
       categories: categoriesArray
     });
-
-    console.log(this.state.categories);
-
   }
 
   deleteCategory = (e) => {
     const confirm = window.confirm('are you sure you want to delete?');
     if (confirm) {
-      console.log(e.target.id, 'confirm');
       firebase.database().ref(`Categories/${e.target.id}`).remove();
     }
   }
 
   render() {
+    // fake numbers, I would ideally like to pass data from dynamically generated categories into here
     const chartData = {
-      labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
+      labels: ["Category1", "Category2", "Category3", "Category4"],
       datasets: [{
         label: "My First dataset",
         backgroundColor: ['red','yellow','green','blue'],
-        data: [this.state.totals.groceries, this.state.totals.transportation , this.state.totals.entertainment, this.state.totals.housing],
+        data: [10, 10 , 10, 10],
       }]
     }
     // console.log(this.state.totals.groceries, "in App.js")
@@ -285,7 +253,7 @@ class App extends Component {
           <h1>Susie's Super Cool Budget App</h1>
         </header>
         <CategoryForm addCategory={this.addCategory}/>
-        <Budget deleteCategory={this.deleteCategory} categories={this.state.categories}/>
+        <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals}/>
         <Table rows={this.state.rows} 
               deleteRow={this.deleteRow} 
               pushToFirebase={this.pushToFirebase}
@@ -297,12 +265,6 @@ class App extends Component {
           <section className="summary">
             <h2>Total earned: <span id="total-earned">${this.state.totals.income}</span></h2>
             <h2>Total spent: <span id="total-spent">${this.state.totals.spending}</span></h2>
-            {/* <h3>Total spent on groceries: <span id="total-groceries">${this.state.totals.groceries.toFixed(2)}</span></h3>
-            <h3>Total spent on transportation: <span id="total-transportation">${this.state.totals.transportation.toFixed(2)}</span></h3>
-            <h3>Total spent on entertainment: <span id="total-entertainment">${this.state.totals.entertainment.toFixed(2)}</span></h3>
-            <h3>Total spent on housing: <span id="total-housing">${this.state.totals.housing.toFixed(2)}</span></h3> */}
-
-            {/* <h3>Total spent on {this.state.categories[0]}: {this.state.totals[this.state.categories[0]]}</h3> */}
           </section>
         </div>
       </div>
@@ -310,5 +272,4 @@ class App extends Component {
   }
 }
 
-// export app to be used in DOM
 export default App;
