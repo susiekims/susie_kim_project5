@@ -18,8 +18,20 @@ class CategoryForm extends Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault()
-        this.props.addCategory(this.state)
+        e.preventDefault();
+        let name = document.getElementById('name').value;
+        let color = document.getElementById('color').value;
+        let budget = document.getElementById('budget').value;
+        console.log(color);
+        
+        if (name.length > 0 && color !== '#000000' && budget.length > 0) {
+            this.props.addCategory(this.state);
+            document.getElementById('name').value = '';
+            document.getElementById('color').value = '';
+            document.getElementById('budget').value = '';
+        } else {
+            alert('yo fill out the form yo!!');
+        }
     }
 
     render() {

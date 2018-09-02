@@ -9,9 +9,16 @@ import CategoryForm from './CategoryForm';
 import firebase from './firebase';
 
 // const augustRef = firebase.database().ref('August');
-const dbRef = firebase.database().ref();
-const septRef = firebase.database().ref('September');
-const categoriesRef = firebase.database().ref('Categories');
+// const dbRef = firebase.database().ref();
+// const septRef = firebase.database().ref('September');
+// const categoriesRef = firebase.database().ref('Categories');
+
+
+let userID = 'user'
+const userRef = firebase.database().ref(userID);
+const budgetRef = firebase.database().ref(`${userID}/Budget`);
+const categoriesRef = firebase.database().ref(`${userID}/Categories`);
+
 
 // have initial row already pushed into firebase with empty strings so data
 // everytime user creates a new row, push that row with empty strings to firebase
@@ -25,6 +32,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      title: '',
       rows : [],
       categories: [],
       // totals: {
@@ -45,7 +53,7 @@ class App extends Component {
     //console.log('App component did mount');
 
     // add event listeneer to tell us if the database has anything on load and when anything changes
-    septRef.on('value', (snapshot) => {
+    budgetRef.on('value', (snapshot) => {
     //  console.log(snapshot.val(), ' snapshot value');
 
       // pass the value of the snapshot into sortData()
@@ -63,7 +71,7 @@ class App extends Component {
    // console.log('add row');
 
     // push an empty row onto firebase
-      septRef.push({
+      budgetRef.push({
         key: '',
         item: '',
         date: '',
@@ -77,7 +85,7 @@ class App extends Component {
   // gets the id of the row user clicked the delete button on
   // removes that row from firebase
   deleteRow = (e) => {
-    const rowRef = firebase.database().ref(`September/${e.target.id}`)
+    const rowRef = firebase.database().ref(`${userID}/${e.target.id}`)
     rowRef.remove();
   }
 
@@ -158,8 +166,7 @@ class App extends Component {
       // in the for loop though, everytime it runs it's overwriting the previous category, BUT WHY??? 
       // i think what's happening here is that getIncome and getTotalSpending are overwriting the total categories, again BUT WHY
     
-          
-    //////////////// RYANS CODE /////////////////
+
     let totals = Object.assign(this.state.totals);
     Object.keys(totals).forEach((category) => {
       console.log(totals);
@@ -179,25 +186,12 @@ class App extends Component {
     this.getTotalSpending(data);
     });
 
-    ///////////// TIMURS CODE ////////////////
-    // let obj = {};
-    // let totals = Object.assign(this.state.totals);
-    // Object.keys(totals).forEach(i => {
-    //     const smallCat = data[i];
-    //     console.log(smallCat);
-    //     obj[smallCat.category] = smallCat.spent
-    // })
-    // this.setState({totals, obj}
-    //   , () => {
-    //   this.getIncome(data);
-    //   this.getTotalSpending(data);
-    // });
   }
  
   // function to push to firebase
   // accepts the parameter of data, which is the data contained in a row
   pushToFirebase = (target, value, data) => {
-    firebase.database().ref(`September/${data.key}`).once('value', (snapshot)=> {
+    firebase.database().ref(`${userID}/Budget/${data.key}`).once('value', (snapshot)=> {
 
       // create variable represent current state of the firebase node
       let currentVal = snapshot.val();
@@ -206,7 +200,7 @@ class App extends Component {
         Object.assign(currentVal, {[target]:value});
   
         //now set the data to the new value
-        firebase.database().ref(`September/${data.key}`).set(currentVal);
+        firebase.database().ref(`${userID}/Budget/${data.key}`).set(currentVal);
     })
   }
 
@@ -215,45 +209,45 @@ class App extends Component {
   }
   
   sortCategories = (obj) => {
-    if (obj === null) {
-      obj = {};
-    }
+    if (obj !== null) {
       
-    console.log(obj);
-    const categoriesArray = Object.entries(obj).map((category)=> {
-      return ({
-        key: category[0],
-        name: category[1].name,
-        budget: category[1].budget,
-        color: category[1].color
+      console.log(obj);
+      const categoriesArray = Object.entries(obj).map((category)=> {
+        return ({
+          key: category[0],
+          name: category[1].name,
+          budget: category[1].budget,
+          color: category[1].color
+        })
       })
-    })
-
-    const totalsArray = Object.values(obj).map((category) => {
-      return ({
-        [category.name]: 0,
-      })
-    })
-
-    // let merged = Object.assign(...arr);
-    let mergedTotals = Object.assign(...totalsArray);
-    console.log(mergedTotals);
-
-    console.log(totalsArray);
-  
-    this.setState({
-      categories: categoriesArray,
-      totals: mergedTotals
-    }, () => {
-      this.getTotals(this.state.rows);
-    });
-
+      
+      if (categoriesArray.length > 0) {
+        const totalsArray = Object.values(obj).map((category) => {
+          return ({
+            [category.name]: 0,
+          })
+        })
+    
+        // let merged = Object.assign(...arr);
+        let mergedTotals = Object.assign(...totalsArray);
+        console.log(mergedTotals);
+    
+        console.log(totalsArray);
+      
+        this.setState({
+          categories: categoriesArray,
+          totals: mergedTotals
+        }, () => {
+          this.getTotals(this.state.rows);
+        });
+      }
+    }  
   }
 
   deleteCategory = (e) => {
     const confirm = window.confirm('are you sure you want to delete?');
     if (confirm) {
-      firebase.database().ref(`Categories/${e.target.id}`).remove();
+      firebase.database().ref(`${userID}/Categories/${e.target.id}`).remove();
     }
   }
 
@@ -279,7 +273,7 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>Susie's Super Cool Budget App</h1>
+          <input type="text" id="title" placeholder="Untitled Budget"/>
         </header>
         <CategoryForm addCategory={this.addCategory}/>
         <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals}/>
