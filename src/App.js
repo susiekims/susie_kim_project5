@@ -27,7 +27,15 @@ class App extends Component {
     this.state = {
       rows : [],
       categories: [],
-      totals: {}
+      // totals: {
+      //   'Transportation': 0,
+      //   'Entertainment': 0,
+      //   'Housing': 0,
+      //   'bills': 0,
+      //   'Drugs': 0,
+      //   'pet supplies': 0
+      // }
+      totals: []
     }
   }
 
@@ -132,47 +140,47 @@ class App extends Component {
   getTotals = (data) => {
     
     /// MY CODE 
-    let totals = this.state.totals
-    let categories = this.state.categories;
-    // console.log(categories);   
-      categories.forEach((category)=> {
-        let total = data.filter((row)=> {
-          return row.category === category.name;
-        }).map((row) => {
-          return row.spent;
-        }).reduce((a,b) => a + b, 0);
-          console.log(category.name, total); /// these values are great!!!!! they are what i am looking for!!
-       /// HOW DO I UPDATE THE STATE WITH THESE VALUES?????????????????
-        this.setState({
-          totals: {
-              ...this.state.totals,
-              [category.name]: total,
-          }, 
-        })
-      });
+    // let totals = this.state.totals
+    // let categories = this.state.categories;
+    // // console.log(categories);   
+    //   categories.forEach((category)=> {
+    //     let total = data.filter((row)=> {
+    //       return row.category === category.name;
+    //     }).map((row) => {
+    //       return row.spent;
+    //     }).reduce((a,b) => a + b, 0);
+    //       console.log(category.name, total); /// these values are great!!!!! they are what i am looking for!!
+    //    /// HOW DO I UPDATE THE STATE WITH THESE VALUES?????????????????
+    //     this.setState({
+    //       totals: {
+    //           ...this.state.totals,
+    //           [category.name]: total,
+    //       }, 
+    //     })
+    //   });
       // in the for loop though, everytime it runs it's overwriting the previous category, BUT WHY??? 
       // i think what's happening here is that getIncome and getTotalSpending are overwriting the total categories, again BUT WHY
     
           
     //////////////// RYANS CODE /////////////////
-    // let totals = Object.assign(this.state.totals);
-    // Object.keys(totals).forEach((category) => {
-    //   console.log(totals);
-    //   let filteredData = data.filter((row) => {
-    //     console.log(category);
-    //     return row.category === category && row.spent ;
-    //   })
-    //   const arrayOfNumber = filteredData.map((row)=> {
-    //     return row.spent;
-    //   })
-    //   let total = arrayOfNumber.reduce((a, b) => a + b, 0);
-    //   totals[category] = total;
-    // })
-    // this.setState({totals}
-    // ,() => {
-    // this.getIncome(data);
-    // this.getTotalSpending(data);
-    // });
+    let totals = Object.assign(this.state.totals);
+    Object.keys(totals).forEach((category) => {
+      console.log(totals);
+      let filteredData = data.filter((row) => {
+        console.log(category);
+        return row.category === category && row.spent ;
+      })
+      const arrayOfNumber = filteredData.map((row)=> {
+        return row.spent;
+      })
+      let total = arrayOfNumber.reduce((a, b) => a + b, 0);
+      totals[category] = total;
+    })
+    this.setState({totals}
+    ,() => {
+    this.getIncome(data);
+    this.getTotalSpending(data);
+    });
 
     ///////////// TIMURS CODE ////////////////
     // let obj = {};
@@ -214,6 +222,7 @@ class App extends Component {
       obj = {};
     }
       
+    console.log(obj);
     const categoriesArray = Object.entries(obj).map((category)=> {
       return ({
         key: category[0],
@@ -222,10 +231,26 @@ class App extends Component {
         color: category[1].color
       })
     })
+
+    const totalsArray = Object.values(obj).map((category) => {
+      return ({
+        [category.name]: 0,
+      })
+    })
+
+    // let merged = Object.assign(...arr);
+    let mergedTotals = Object.assign(...totalsArray);
+    console.log(mergedTotals);
+
+    console.log(totalsArray);
   
     this.setState({
-      categories: categoriesArray
+      categories: categoriesArray,
+      totals: mergedTotals
+    }, () => {
+      this.getTotals(this.state.rows);
     });
+
   }
 
   deleteCategory = (e) => {
@@ -237,12 +262,17 @@ class App extends Component {
 
   render() {
     // fake numbers, I would ideally like to pass data from dynamically generated categories into here
+    let labels = Object.keys(this.state.totals);
+    let data = Object.values(this.state.totals);
+    let colors = Object.values(this.state.categories);
+    console.log(colors);
+    // console.log(labels);
     const chartData = {
-      labels: ["Category1", "Category2", "Category3", "Category4"],
+      labels: labels,
       datasets: [{
         label: "My First dataset",
         backgroundColor: ['red','yellow','green','blue'],
-        data: [10, 10 , 10, 10],
+        data: data,
       }]
     }
     // console.log(this.state.totals.groceries, "in App.js")
