@@ -35,7 +35,9 @@ class App extends Component {
       //   'Drugs': 0,
       //   'pet supplies': 0
       // }
-      totals: []
+      totals: [],
+      totalSpending: 0,
+      totalIncome: 0,
     }
   }
 
@@ -116,10 +118,10 @@ class App extends Component {
     .reduce((a,b)=> a + b, 0);
 
     /////// dont change this!!! the code will break!!!! ////////////
-    const totals = Object.assign(this.state.totals,{income: totalIncome});
+  //  this.state.totals,{income: totalIncome});
     ////////////////////////////////////////////////////////////////
 
-    this.setState({totals}) 
+    this.setState({totalIncome}) 
   }
 
   /// get total amount spent
@@ -129,12 +131,7 @@ class App extends Component {
     }).map((row)=> {
       return row.spent;
     }).reduce((a,b) => a + b, 0);
-    this.setState({
-      totals: {
-        ...this.state.totals,
-        spending: totalSpending,
-      }
-    });
+    this.setState({totalSpending});
   }
 
   getTotals = (data) => {
@@ -264,14 +261,16 @@ class App extends Component {
     // fake numbers, I would ideally like to pass data from dynamically generated categories into here
     let labels = Object.keys(this.state.totals);
     let data = Object.values(this.state.totals);
-    let colors = Object.values(this.state.categories);
+    let colors = Object.values(this.state.categories).map((category) => {
+      return category.color
+    });
     console.log(colors);
     // console.log(labels);
     const chartData = {
       labels: labels,
       datasets: [{
         label: "My First dataset",
-        backgroundColor: ['red','yellow','green','blue'],
+        backgroundColor: colors,
         data: data,
       }]
     }
@@ -293,8 +292,8 @@ class App extends Component {
         <div className='summary-container'>
           <Chart totals={this.state.totals} chartData={chartData}/>
           <section className="summary">
-            <h2>Total earned: <span id="total-earned">${this.state.totals.income}</span></h2>
-            <h2>Total spent: <span id="total-spent">${this.state.totals.spending}</span></h2>
+            <h2>Total earned: <span id="total-earned">${this.state.totalIncome}</span></h2>
+            <h2>Total spent: <span id="total-spent">${this.state.totalSpending}</span></h2>
           </section>
         </div>
       </div>
