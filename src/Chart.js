@@ -50,6 +50,7 @@ class Chart extends Component {
       
         return (
             <div className="chart">
+                <h2>Expense Breakdown</h2>
                <Pie data={this.props.chartData} />
                {/* <button onClick={this.updateChart}>REFRESH CHART</button> */}
             </div>

@@ -30,7 +30,7 @@ class CategoryForm extends Component {
             document.getElementById('color').value = '';
             document.getElementById('budget').value = '';
         } else {
-            alert('yo fill out the form yo!!');
+            alert('Please enter a category, budget, and colour.');
         }
     }
 

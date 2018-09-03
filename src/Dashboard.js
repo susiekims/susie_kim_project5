@@ -4,12 +4,11 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            sheets: []
+            sheets: ['September Budget']
         }
     }
 
     openSheet() {
-        console.log('click');
         document.getElementById('dashboard').style.display = 'none';
         document.getElementById('home-page').style.display = 'block';
     }
@@ -18,23 +17,20 @@ class Dashboard extends Component {
         const confirm = window.confirm('are you sure you want to delete this sheet?');
         if (confirm) {
             // firebase.database().ref(`${userID}/Categories/${e.target.id}`).remove();
-            console.log('delete');
+            alert('deleted');
         }
     }
 
-    handleChange() {
-
-    }
 
     render() {
         return (
-            <div className="dashboard" id="dashboard">
+            <section className="dashboard" id="dashboard">
                 <h1>Welcome, Susie</h1>
                 <h2>Your sheets</h2>
                    
                     <div className="sheet-list">
                         {
-                            this.props.sheets.map((sheet) => {
+                            this.state.sheets.map((sheet) => {
                                 return (
                                     <div className="sheet-thumbnail" >
                                         <h3>September Budget</h3>
@@ -44,11 +40,12 @@ class Dashboard extends Component {
                                 )
                             })
                         }
+                        <div className="sheet-thumbnail">
+                            <input type="text" id="new-sheet" placeholder="Create New Sheet"/>
+                            <button id="new-sheet-button">+</button>
+                        </div>
                     </div>
-    
-                <input type="text" id="new-sheet" placeholder="New Sheet" onChange={this.handleChange}/>
-                <button id="new-sheet-button">Start New Sheet</button>
-            </div>
+            </section>
         )
 
     }

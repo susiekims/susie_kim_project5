@@ -4,8 +4,12 @@ header {
   
   table {
     width: 800px;
-    margin: 50px auto 0 auto;
+    margin: 0 auto;
     border-collapse: collapse;
+  }
+
+  section {
+    padding: 20px 0px;
   }
   
   table, td, th {
@@ -27,7 +31,7 @@ header {
   .summary-container {
     width: 80%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin: 0 auto;
   }
   
@@ -40,7 +44,7 @@ header {
     width: 50%;
   }
   
-  .budget {
+  .budget-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -63,7 +67,7 @@ header {
   .landing-page {
     width: 100vw;
     height: 100vh;
-    background: darkcyan;
+    /* background: darkcyan; */
 }
 
 .landing-content {

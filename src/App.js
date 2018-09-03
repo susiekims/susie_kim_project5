@@ -8,10 +8,11 @@ import CategoryForm from './CategoryForm';
 import Dashboard from './Dashboard';
 import firebase from './firebase';
 
-let userID = 'user';
-const userRef = firebase.database().ref(userID);
-const budgetRef = firebase.database().ref(`${userID}/Budget`);
-const categoriesRef = firebase.database().ref(`${userID}/Categories`);
+let userID = 'susie';
+let sheetName = 'September Budget'
+const userRef = firebase.database().ref(`users/${userID}`);
+const budgetRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data`);
+const categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories`);
 
 // create App class
 class Home extends Component {
@@ -23,13 +24,13 @@ class Home extends Component {
         this.state = {
             username: '',
             password: '',
-            title: '',
-            sheets: ['sheet1'],
+            title: 'September Budget',
             rows : [],
             categories: [],
             totals: [],
             totalSpending: 0,
             totalIncome: 0,
+            totalBudget: 0,
         }
     }
 
@@ -39,6 +40,12 @@ class Home extends Component {
         });
         categoriesRef.on('value', (snapshot) => {
             this.sortCategories(snapshot.val());
+        })
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            title: e.target.value
         })
     }
 
@@ -56,7 +63,7 @@ class Home extends Component {
   // gets the id of the row user clicked the delete button on
   // removes that row from firebase
     deleteRow = (e) => {
-        const rowRef = firebase.database().ref(`${userID}/${e.target.id}`)
+        const rowRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${e.target.id}`);
         rowRef.remove();
     }
 
@@ -122,16 +129,30 @@ class Home extends Component {
         });
     }
 
+    getTotalBudget = (categories) => {
+        let totalBudget = categories.map((category) => {
+            return parseInt(category.budget)
+        }).reduce((a,b) => a + b, 0);
+        this.setState({totalBudget})
+    }
+
     pushToFirebase = (target, value, data) => {
-        firebase.database().ref(`${userID}/Budget/${data.key}`).once('value', (snapshot)=> {
+        firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${data.key}`).once('value', (snapshot)=> {
             let currentVal = snapshot.val();
             Object.assign(currentVal, {[target]:value});
-            firebase.database().ref(`${userID}/Budget/${data.key}`).set(currentVal);
+            firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${data.key}`).set(currentVal);
         })
     }
 
     addCategory = (newCategory) => {
         categoriesRef.push(newCategory);
+    }
+
+    deleteCategory = (e) => {
+        const confirm = window.confirm('are you sure you want to delete?');
+        if (confirm) {
+            firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`).remove();
+        }
     }
   
     sortCategories = (obj) => {
@@ -157,21 +178,14 @@ class Home extends Component {
                     totals: mergedTotals
                 }, () => {
                     this.getTotals(this.state.rows);
+                    this.getTotalBudget(categoriesArray);
                 });
             }
         }  
     }
 
-    deleteCategory = (e) => {
-        const confirm = window.confirm('are you sure you want to delete?');
-        if (confirm) {
-            firebase.database().ref(`${userID}/Categories/${e.target.id}`).remove();
-        }
-    }
-
     handleLogin = (e) => {
         e.preventDefault();
-        console.log('submitting');
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
     }
@@ -193,16 +207,11 @@ class Home extends Component {
         }
 
         return (
-            <div>    
+            <main>    
                 <div className="landing-page" id="landing-page">
                     <div className="landing-content">
                         <h1>Budgit</h1>
                         <h2>Personal Expense Tracker</h2>
-                        {/* <form>
-                            <input type="text" placeholder="Enter your username" />
-                            <input type="text" placeholder="Enter your password" />
-                            <input type="submit" onClick={this.handleLogin} value="Sign In" />
-                        </form> */}
                         <form>
                             <input type="text" placeholder="Create an username" id="username"/>
                             <input type="text" placeholder="Create a password" id="password"/>
@@ -210,28 +219,44 @@ class Home extends Component {
                         </form>
                     </div>
                 </div>
-                <Dashboard sheets={this.state.sheets}/>
+                <Dashboard />
+
                 <div className="Home" id="home-page">
                     <header>
-                        <input type="text" id="title" placeholder="Untitled Budget"/>
+                        <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
                     </header>
                     <CategoryForm addCategory={this.addCategory}/>
                     <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals}/>
                     <Table rows={this.state.rows} 
                         deleteRow={this.deleteRow} 
+                        addRow = {this.addRow}
                         pushToFirebase={this.pushToFirebase}
-                        categories={this.state.categories}/>
-                    <button onClick={this.addRow}>Add Row</button>
-
+                        categories={this.state.categories}
+                    />
                     <div className='summary-container'>
                         <Chart totals={this.state.totals} chartData={chartData}/>
                         <section className="summary">
-                            <h2>Total earned: <span id="total-earned">${this.state.totalIncome}</span></h2>
-                            <h2>Total spent: <span id="total-spent">${this.state.totalSpending}</span></h2>
+                        <h2>Summary</h2>
+                            <h3>Total earned: <span id="total-earned">${this.state.totalIncome}</span></h3>
+                            <h3>Total spent: <span id="total-spent">${this.state.totalSpending}</span></h3>
+                            <h3>Total budget: {this.state.totalBudget}</h3>
+                            {   
+                                this.state.totalBudget - this.state.totalSpending > 0 && 
+                                    <h2 id="final-difference">
+                                        You are <span style={{color: 'green'}}> ${this.state.totalBudget - this.state.totalSpending}</span> under budget.
+                                    </h2>
+                            }
+
+                            {
+                                this.state.totalBudget - this.state.totalSpending < 0 && 
+                                    <h2 id="final-difference">
+                                        You are <span style={{color: 'red'}}> ${this.state.totalSpending - this.state.totalBudget}</span> over budget.
+                                    </h2>
+                            }
                         </section>
                     </div>
                 </div>
-            </div>    
+            </main>    
         );
     }
 }
