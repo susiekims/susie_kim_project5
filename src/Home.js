@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Home.css';
 
 import Budget from './Budget';
 import Chart from './Chart';
 import Table from './Table';
 import CategoryForm from './CategoryForm';
-import Dashboard from './Dashboard';
 import firebase from './firebase';
 
 let userID = 'user';
@@ -15,16 +14,12 @@ const categoriesRef = firebase.database().ref(`${userID}/Categories`);
 
 // create App class
 class Home extends Component {
-    
   // create default state
   // state has a property of rows which is an array that contains the class TableRow
     constructor() {
         super();
         this.state = {
-            username: '',
-            password: '',
             title: '',
-            sheets: ['sheet1'],
             rows : [],
             categories: [],
             totals: [],
@@ -173,7 +168,7 @@ class Home extends Component {
         e.preventDefault();
         console.log('submitting');
         document.getElementById('landing-page').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('home-page').style.display = 'block';
     }
 
     render() {
@@ -198,19 +193,19 @@ class Home extends Component {
                     <div className="landing-content">
                         <h1>Budgit</h1>
                         <h2>Personal Expense Tracker</h2>
-                        {/* <form>
+                        <form>
                             <input type="text" placeholder="Enter your username" />
                             <input type="text" placeholder="Enter your password" />
                             <input type="submit" onClick={this.handleLogin} value="Sign In" />
-                        </form> */}
+                        </form>
                         <form>
-                            <input type="text" placeholder="Create an username" id="username"/>
-                            <input type="text" placeholder="Create a password" id="password"/>
+                            <input type="text" placeholder="Create an username" />
+                            <input type="text" placeholder="Create a password" />
                             <input type="submit" onClick={this.handleLogin} value="Create an account" />
                         </form>
                     </div>
                 </div>
-                <Dashboard sheets={this.state.sheets}/>
+
                 <div className="Home" id="home-page">
                     <header>
                         <input type="text" id="title" placeholder="Untitled Budget"/>

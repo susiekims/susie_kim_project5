@@ -1,0 +1,61 @@
+header {
+  padding: 20px 0px;
+}
+
+table {
+  width: 800px;
+  margin: 50px auto 0 auto;
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+.addRowButton {
+ margin: 50px 0px;
+}
+
+.row input {
+  border: none;
+}
+
+td {
+  height: 20px;
+}
+
+
+.summary-container {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.chart {
+  width: 50%;
+}
+
+
+.summary {
+  width: 50%;
+}
+
+.budget {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.budget-card {
+  width: 300px;
+}
+
+#title {
+  font-size: 30px;
+  border: none;
+}
+
+.Home {
+  text-align: center;
+}

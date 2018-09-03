@@ -41,7 +41,7 @@ class CategoryForm extends Component {
             <input type="text" id="budget" onChange={this.handleChange} placeholder="Budget"/>
             <input type="color" id="color" onChange={this.handleChange} />
             <input type="submit" id="submit-category" value="create new category" onClick={this.handleSubmit}/>
-          </form>
+        </form>
         )
     }
 }
