@@ -34,7 +34,7 @@ class Dashboard extends Component {
                                 return (
                                     <div className="sheet-thumbnail" >
                                         <h3>September Budget</h3>
-                                        <button onClick={this.deleteSheet} id="delete-sheet">X</button>
+                                        <button onClick={this.deleteSheet} id="delete-sheet"><i class="fas fa-times"></i></button>
                                         <button onClick={this.openSheet} id="open-sheet">Open sheet</button>
                                     </div>
                                 )
@@ -42,7 +42,7 @@ class Dashboard extends Component {
                         }
                         <div className="sheet-thumbnail">
                             <input type="text" id="new-sheet" placeholder="Create New Sheet"/>
-                            <button id="new-sheet-button">+</button>
+                            <button id="new-sheet-button"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
             </section>

@@ -37,9 +37,9 @@ class CategoryForm extends Component {
     render() {
         return (
         <form action="">
-            <input type="text" id="name" onChange={this.handleChange} placeholder="Enter Category"/>
-            <input type="text" id="budget" onChange={this.handleChange} placeholder="Budget"/>
-            <input type="color" id="color" onChange={this.handleChange} />
+            <input type="text" maxlength="20"  id="name" onChange={this.handleChange} placeholder="Enter Category"/>
+            <input type="text" maxlength="6" id="budget" onChange={this.handleChange} placeholder="Budget"/>
+            <input type="color" maxlength="6" id="color" onChange={this.handleChange} />
             <input type="submit" id="submit-category" value="create new category" onClick={this.handleSubmit}/>
         </form>
         )

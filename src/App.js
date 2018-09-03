@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css';
 
 import Budget from './Budget';
 import Chart from './Chart';
@@ -15,7 +15,7 @@ const budgetRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/D
 const categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories`);
 
 // create App class
-class Home extends Component {
+class App extends Component {
     
   // create default state
   // state has a property of rows which is an array that contains the class TableRow
@@ -63,8 +63,11 @@ class Home extends Component {
   // gets the id of the row user clicked the delete button on
   // removes that row from firebase
     deleteRow = (e) => {
-        const rowRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${e.target.id}`);
-        rowRef.remove();
+        const confirm = window.confirm('Are you sure you want to delete this row?');
+        if (confirm) {
+            const rowRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${e.target.id}`);
+            rowRef.remove();
+        }
     }
 
   // function to get data from variable and change it into more accessible form
@@ -149,7 +152,7 @@ class Home extends Component {
     }
 
     deleteCategory = (e) => {
-        const confirm = window.confirm('are you sure you want to delete?');
+        const confirm = window.confirm('Are you sure you want to delete this category?');
         if (confirm) {
             firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`).remove();
         }
@@ -225,8 +228,8 @@ class Home extends Component {
                     <header>
                         <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
                     </header>
-                    <CategoryForm addCategory={this.addCategory}/>
                     <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals}/>
+                    <CategoryForm addCategory={this.addCategory} />
                     <Table rows={this.state.rows} 
                         deleteRow={this.deleteRow} 
                         addRow = {this.addRow}
@@ -237,20 +240,20 @@ class Home extends Component {
                         <Chart totals={this.state.totals} chartData={chartData}/>
                         <section className="summary">
                         <h2>Summary</h2>
-                            <h3>Total earned: <span id="total-earned">${this.state.totalIncome}</span></h3>
-                            <h3>Total spent: <span id="total-spent">${this.state.totalSpending}</span></h3>
-                            <h3>Total budget: {this.state.totalBudget}</h3>
+                            <h3>Total earned: <span id="total-earned">${(this.state.totalIncome).toFixed(2)}</span></h3>
+                            <h3>Total spent: <span id="total-spent">${(this.state.totalSpending).toFixed(2)}</span></h3>
+                            <h3>Total budget: {(this.state.totalBudget).toFixed(2)}</h3>
                             {   
                                 this.state.totalBudget - this.state.totalSpending > 0 && 
                                     <h2 id="final-difference">
-                                        You are <span style={{color: 'green'}}> ${this.state.totalBudget - this.state.totalSpending}</span> under budget.
+                                        You are <span style={{color: 'green'}}> ${(this.state.totalBudget - this.state.totalSpending).toFixed(2)}</span> under budget.
                                     </h2>
                             }
 
                             {
                                 this.state.totalBudget - this.state.totalSpending < 0 && 
                                     <h2 id="final-difference">
-                                        You are <span style={{color: 'red'}}> ${this.state.totalSpending - this.state.totalBudget}</span> over budget.
+                                        You are <span style={{color: 'red'}}> ${(this.state.totalSpending - this.state.totalBudget).toFixed(2)}</span> over budget.
                                     </h2>
                             }
                         </section>
@@ -261,4 +264,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default App;
