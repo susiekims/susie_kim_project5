@@ -4,7 +4,6 @@ import './styles/App.css';
 import Budget from './Budget';
 import Chart from './Chart';
 import Table from './Table';
-import CategoryForm from './CategoryForm';
 import Dashboard from './Dashboard';
 import firebase from './firebase';
 
@@ -226,23 +225,38 @@ class App extends Component {
 
                 <div className="Home" id="home-page">
                     <header>
-                        <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
+                        <div className="header-wrapper">
+                            <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
+                            <div className="header-buttons">
+                                <button className="button button-light">Back to Dashboard</button>
+                                <button className="button button-light">Logout</button>
+                            </div>
+                        </div>
                     </header>
-                    <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals}/>
-                    <CategoryForm addCategory={this.addCategory} />
+                    <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals} addCategory={this.addCategory}/>
+                    {/* <CategoryForm addCategory={this.addCategory} /> */}
                     <Table rows={this.state.rows} 
                         deleteRow={this.deleteRow} 
                         addRow = {this.addRow}
                         pushToFirebase={this.pushToFirebase}
                         categories={this.state.categories}
                     />
-                    <div className='summary-container'>
+                    <section className='summary-container'>
                         <Chart totals={this.state.totals} chartData={chartData}/>
-                        <section className="summary">
+                        <div className="summary">
                         <h2>Summary</h2>
-                            <h3>Total earned: <span id="total-earned">${(this.state.totalIncome).toFixed(2)}</span></h3>
-                            <h3>Total spent: <span id="total-spent">${(this.state.totalSpending).toFixed(2)}</span></h3>
-                            <h3>Total budget: {(this.state.totalBudget).toFixed(2)}</h3>
+                            <h4>Total earned</h4> 
+                            <h3>${(this.state.totalIncome).toFixed(2)}</h3>
+
+
+                            <h4>Total spent</h4>
+                            <h3>${(this.state.totalSpending).toFixed(2)}</h3>
+
+                            <h4>Total budget</h4> 
+                            <h3>{(this.state.totalBudget).toFixed(2)}</h3>
+
+                            <h4>Earned vs. Spent</h4>
+                            <h3>${this.state.totalIncome - this.state.totalSpending}</h3>
                             {   
                                 this.state.totalBudget - this.state.totalSpending > 0 && 
                                     <h2 id="final-difference">
@@ -256,8 +270,8 @@ class App extends Component {
                                         You are <span style={{color: 'red'}}> ${(this.state.totalSpending - this.state.totalBudget).toFixed(2)}</span> over budget.
                                     </h2>
                             }
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </main>    
         );

@@ -1,73 +1,207 @@
-header {
-    padding: 20px 0px;
-  }
-  
-  table {
-    width: 800px;
-    margin: 0 auto;
-    border-collapse: collapse;
-  }
+/*--------------------- General Syles ---------------- */
 
-  section {
+.button {
+    font-size: 1.2rem;
+    color: #898989;
+    border: 1px solid #aaaaaa;
+    background: none;
+    border-radius: 1.5rem;
+    padding: 5px 10px;
+
+}
+
+section {
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 30px 0px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: normal;
+}
+
+h2 {
+    font-weight: 200;
+    font-size: 3rem;
+    color: #aaaaaa;
+}
+
+h3 {
+    font-size: 2.8rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.2rem;
+}
+
+/*--------------------- Header Styles ---------------- */
+
+header {
+    width : 100%;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.header-wrapper {
+    width: 90%;
+    max-width: 1000px;
+    padding: 25px 0px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-buttons button:first-child {
+    margin-right: 5px;
+}
+
+
+/*--------------------- Categories Styles ---------------- */
+
+.budget-list {
+    display: flex;
+    flex-wrap: wrap;
     padding: 20px 0px;
-  }
+}
   
-  table, td, th {
-    border: 1px solid black;
-  }
-  
-  .addRowButton {
-   margin: 50px 0px;
-  }
-  
-  .row input {
+.budget-card {
+    color: white;
+    margin: 0px 15px 15px 0px;
+    min-width: 200px;
+    height: 280px;
+    flex: 0 0 calc(100% / 4 - 12.5px);
+    padding: 20px;
+    border-radius: 1.5rem;
+    position: relative;
+}
+
+.budget button {
+    position: absolute;
+    font-size: 2rem;
     border: none;
-  }
+    color: white;
+    background: none;
+    top: 10px;
+    right: 10px;
+}
+
+
+.budget-card h3 {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid white;
+}
+
+.budget-card h4 {
+    margin-bottom: 5px;
+}
+
+.budget-card h5 {
+    font-style: italic;
+}
+
+.budget-card:nth-child(4n+0) {
+    margin-right: 0px;
+}
+
+.category-form {
+    color: #aaaaaa;
+    border: 1px solid #aaaaaa;
+}
+
+.category-form input {
+    font-size: 1.8rem;
+    border: none;
+    border: 1px solid #aaaaaa; 
+    border-radius: 1.8rem;
+    text-align: center;
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 8px 0px;
+}
+
+input[type=color] {
+    background: none;
+    padding: 5px 12px;
+    height: 35px;
+}
+
+input[type=submit] {
+    width: auto;
+    padding: 8px 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: #888888;
+    color: white;
+    font-weight: 200;
+}
+
+/* ------------------ Table Styles ------------------*/
+
+table {
+    width: 100%;
+}
   
-  td {
-    height: 20px;
-  }
   
-  .summary-container {
-    width: 80%;
+.add-row {
+    display: block;
+    border-radius: 1.8rem;
+    width: auto;
+    margin: 0 auto;
+    padding: 8px 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: #888888;
+    color: white;
+    font-weight: 200;
+}
+  
+.row input {
+    border: none;
+}
+  
+th {
+    text-align: left;
+}
+
+td {
+    padding: 10px 0px;
+}
+
+tr {
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.summary-container {
     display: flex;
     align-items: flex-start;
     margin: 0 auto;
-  }
+}
   
-  .chart {
+.chart {
     width: 50%;
-  }
+}
   
   
-  .summary {
+.summary {
     width: 50%;
-  }
+}
   
-  .budget-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
   
-  .budget-card {
-    width: 300px;
-  }
-  
-  #title {
+#title {
     font-size: 30px;
     border: none;
-  }
-  
-  #home-page {
-    text-align: center;
-    display: none;
-  }
+}
 
-  .landing-page {
+.landing-page {
     width: 100vw;
     height: 100vh;
-    /* background: darkcyan; */
 }
 
 .landing-content {
@@ -79,17 +213,24 @@ header {
 }
 
 #home-page {
-  display: none;
+  display: block;
 }
 
 #dashboard {
   display: none;
-  text-align: center;
 }
 
 .sheet-thumbnail {
-  width: 200px;
-  border: 1px solid black;
-  text-align: center;
-  padding: 30px;
+    width: 200px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 30px;
+}
+
+#landing-page {
+    display: none;
+}
+
+#dashboard {
+    display: none;
 }

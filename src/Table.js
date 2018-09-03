@@ -36,7 +36,7 @@ const Table = (props) => {
                 </tbody>
         
             </table>
-            <button onClick={props.addRow}>Add Row</button>
+            <button className="add-row" onClick={props.addRow}>Add Row</button>
         </section>
     )
 }

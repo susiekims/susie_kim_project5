@@ -41,7 +41,7 @@ class TableRow extends Component {
             // render Table Row which 5 different input
             // give the row a unique Key, which got it from firebase which was generated when the new Row was created
             <tr className="row">
-                <td><input type="text" maxlength="20" id="item" onChange={this.handleChange} value={this.state.item}/></td>
+                <td><input type="text" maxlength="20" id="item" onChange={this.handleChange} value={this.state.item} placeholder="Item"/></td>
                 <td><input type="date" id="date" onChange={this.handleChange} value={this.state.date}/></td>
                 <td>
                     <select id="category" onChange={this.handleChange} value={this.state.category}>
@@ -50,7 +50,7 @@ class TableRow extends Component {
                         {
                             categories.map((category) => {
                                 return (
-                                    <option key={category.key} value={category.name}>{category.name} </option>
+                                    <option style={{color: category.color}} key={category.key} value={category.name}>{category.name} </option>
                                 )
                             })
                         }
@@ -58,10 +58,10 @@ class TableRow extends Component {
                     <i class="fas fa-sort-down"></i>                                 
                 </td>
                 <td>
-                    <input type="text" maxlength="5" id="earned" onChange={this.handleChange} value={this.state.earned} style={{color: 'green'}} />
+                    <input type="text" maxlength="5" id="earned" onChange={this.handleChange} value={this.state.earned} style={{color: 'green'}} placeholder="-"/>
                 </td>
                 <td>
-                    <input type="text" maxlength="5" id="spent" onChange={this.handleChange} value={this.state.spent} style={{color: 'red'}} />
+                    <input type="text" maxlength="5" id="spent" onChange={this.handleChange} value={this.state.spent} style={{color: 'red'}} placeholder="-"/>
                 </td>
                 <td>
                     <button id={this.state.key} onClick={this.props.deleteRow}><i class="fas fa-times"></i></button>

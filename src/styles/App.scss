@@ -1,0 +1,112 @@
+header {
+    width: 90%;
+    max-width: 1000px;
+    padding: 25px 0px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.button {
+    font-size: 1.2rem;
+    color: #898989;
+    border: 1px solid #aaaaaa;
+    background: none;
+    border-radius: 1.5rem;
+    padding: 5px 10px;
+
+}
+
+table {
+    width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+section {
+    padding: 20px 0px;
+}
+  
+table, td, th {
+    border: 1px solid black;
+}
+  
+.addRowButton {
+    margin: 50px 0px;
+}
+  
+.row input {
+    border: none;
+}
+  
+td {
+    height: 20px;
+}
+  
+.summary-container {
+    width: 80%;
+    display: flex;
+    align-items: flex-start;
+    margin: 0 auto;
+}
+  
+.chart {
+    width: 50%;
+}
+  
+  
+.summary {
+    width: 50%;
+}
+  
+.budget-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+  
+.budget-card {
+    width: 300px;
+}
+  
+#title {
+    font-size: 30px;
+    border: none;
+}
+
+.landing-page {
+    width: 100vw;
+    height: 100vh;
+}
+
+.landing-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#home-page {
+  display: block;
+}
+
+#dashboard {
+  display: none;
+}
+
+.sheet-thumbnail {
+    width: 200px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 30px;
+}
+
+#landing-page {
+    display: none;
+}
+
+#dashboard {
+    display: none;
+}
