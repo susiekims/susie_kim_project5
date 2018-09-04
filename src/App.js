@@ -23,7 +23,7 @@ class App extends Component {
         this.state = {
             username: '',
             password: '',
-            title: 'September Spending',
+            title: '',
             rows : [],
             categories: [],
             totals: [],
@@ -33,6 +33,7 @@ class App extends Component {
         }
     }
 
+    // change listeners for databases
     componentDidMount() {
         budgetRef.on('value', (snapshot) => {
             this.sortData(snapshot.val());
@@ -42,14 +43,14 @@ class App extends Component {
         })
     }
 
+    // change state of title
     handleChange = (e) => {
         this.setState({
             title: e.target.value
         })
     }
 
-
-
+    // push empty row onto firebase
     addRow = () => {
         budgetRef.push({
             key: '',
@@ -61,8 +62,7 @@ class App extends Component {
         })
     }
 
-  // gets the id of the row user clicked the delete button on
-  // removes that row from firebase
+  // removes row from firebase
     deleteRow = (e) => {
         const confirm = window.confirm('Are you sure you want to delete this row?');
         if (confirm) {
@@ -71,12 +71,11 @@ class App extends Component {
         }
     }
 
-  // function to get data from variable and change it into more accessible form
+  // get data from firebase and change it into a more accessble form
     sortData = (obj) => {
         if (obj === null) {
             obj = {};
         } 
-    // create new array called rowArray from object which is passed down from .on('value')
         const rowArray = Object.entries(obj).map((row) => {
             return ({
                 key: row[0],
@@ -94,7 +93,7 @@ class App extends Component {
         })
     }
 
-  // function to get total amount of earned
+  // get total income
     getIncome = (data) => {
         let totalIncome = data.filter((row)=> {
             return row.earned > 0;
@@ -104,7 +103,7 @@ class App extends Component {
         this.setState({totalIncome}) 
     }
 
-  /// get total amount spent
+   // get total amount spent
     getTotalSpending = (data) => {
         let totalSpending = data.filter((row)=> {
             return row.spent > 0;
@@ -114,6 +113,8 @@ class App extends Component {
         this.setState({totalSpending});
     }
 
+    // get category totals
+    // for each category in this.state.totals, filter the data for items that in that category, map their spending, and get the sum
     getTotals = (data) => {
         let totals = Object.assign(this.state.totals);
         Object.keys(totals).forEach((category) => {
@@ -133,6 +134,7 @@ class App extends Component {
         });
     }
 
+    // get total value of all the category budgets
     getTotalBudget = (categories) => {
         let totalBudget = categories.map((category) => {
             return parseInt(category.budget)
@@ -140,6 +142,7 @@ class App extends Component {
         this.setState({totalBudget})
     }
 
+    // push row data to firebase
     pushToFirebase = (target, value, data) => {
         firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${data.key}`).once('value', (snapshot)=> {
             let currentVal = snapshot.val();
@@ -148,17 +151,20 @@ class App extends Component {
         })
     }
 
+    // push category to the category reference
     addCategory = (newCategory) => {
         categoriesRef.push(newCategory);
     }
 
+    // delete category reference from firebase
     deleteCategory = (e) => {
         const confirm = window.confirm('Are you sure you want to delete this category?');
         if (confirm) {
             firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`).remove();
         }
     }
-  
+    
+    // get data from firebase and change to more accessible form
     sortCategories = (obj) => {
         if (obj !== null) {
             const categoriesArray = Object.entries(obj).map((category)=> {
@@ -188,6 +194,7 @@ class App extends Component {
         }  
     }
 
+    // placeholder function, doesn't do anything yet
     handleLogin = (e) => {
         e.preventDefault();
         document.getElementById('landing-page').style.display = 'none';
@@ -227,10 +234,8 @@ class App extends Component {
 
                 <div className="Home" id="home-page">
                     <header>
-                        <div className="header-wrapper">
-                            <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
-                            {/* <button className="button button-light">Back to Dashboard</button> */}
-                        </div>
+                        <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
+                        {/* <button className="button button-light">Back to Dashboard</button> */}
                     </header>
                     <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals} addCategory={this.addCategory} rows={this.state.rows}/>
                     {/* <CategoryForm addCategory={this.addCategory} /> */}
@@ -284,7 +289,6 @@ class App extends Component {
                 <footer>
                     <div className="footer-wrapper">
                         <p>Budgit is a personal project by Susie Kim</p>
-                        {/* <button className="button button-light">Back to Dashboard</button> */}
                     </div>
                 </footer>
             </main>    

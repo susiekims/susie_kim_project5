@@ -18,7 +18,6 @@ class Dashboard extends Component {
     deleteSheet() {
         const confirm = window.confirm('are you sure you want to delete this sheet?');
         if (confirm) {
-            // firebase.database().ref(`${userID}/Categories/${e.target.id}`).remove();
             alert('deleted');
         }
     }
