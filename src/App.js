@@ -23,7 +23,7 @@ class App extends Component {
         this.state = {
             username: '',
             password: '',
-            title: 'September Budget',
+            title: 'September Spending',
             rows : [],
             categories: [],
             totals: [],
@@ -47,6 +47,8 @@ class App extends Component {
             title: e.target.value
         })
     }
+
+
 
     addRow = () => {
         budgetRef.push({
@@ -227,13 +229,10 @@ class App extends Component {
                     <header>
                         <div className="header-wrapper">
                             <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
-                            <div className="header-buttons">
-                                <button className="button button-light">Back to Dashboard</button>
-                                <button className="button button-light">Logout</button>
-                            </div>
+                            {/* <button className="button button-light">Back to Dashboard</button> */}
                         </div>
                     </header>
-                    <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals} addCategory={this.addCategory}/>
+                    <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals} addCategory={this.addCategory} rows={this.state.rows}/>
                     {/* <CategoryForm addCategory={this.addCategory} /> */}
                     <Table rows={this.state.rows} 
                         deleteRow={this.deleteRow} 
@@ -244,35 +243,50 @@ class App extends Component {
                     <section className='summary-container'>
                         <Chart totals={this.state.totals} chartData={chartData}/>
                         <div className="summary">
-                        <h2>Summary</h2>
-                            <h4>Total earned</h4> 
-                            <h3>${(this.state.totalIncome).toFixed(2)}</h3>
+                            <h2>Summary</h2>
+                            <div className="summary-list">
+                                <div className="summary-card">
+                                    <h4>Total earned</h4> 
+                                    <h3>${(this.state.totalIncome).toFixed(2)}</h3>
+                                </div>
+                                
+                                <div className="summary-card">
+                                    <h4>Total spent</h4>
+                                    <h3>${(this.state.totalSpending).toFixed(2)}</h3>
+                                </div>
 
+                                <div className="summary-card">
+                                    <h4>Total budget</h4> 
+                                    <h3>${(this.state.totalBudget).toFixed(2)}</h3>
+                                </div>
 
-                            <h4>Total spent</h4>
-                            <h3>${(this.state.totalSpending).toFixed(2)}</h3>
-
-                            <h4>Total budget</h4> 
-                            <h3>{(this.state.totalBudget).toFixed(2)}</h3>
-
-                            <h4>Earned vs. Spent</h4>
-                            <h3>${this.state.totalIncome - this.state.totalSpending}</h3>
+                                <div className="summary-card">
+                                    <h4>Earned vs. Spent</h4>
+                                    <h3>${(this.state.totalIncome - this.state.totalSpending).toFixed(2)}</h3>
+                                </div>
+                            </div>
                             {   
                                 this.state.totalBudget - this.state.totalSpending > 0 && 
-                                    <h2 id="final-difference">
+                                    <h5 id="final-difference">
                                         You are <span style={{color: 'green'}}> ${(this.state.totalBudget - this.state.totalSpending).toFixed(2)}</span> under budget.
-                                    </h2>
+                                    </h5>
                             }
 
                             {
                                 this.state.totalBudget - this.state.totalSpending < 0 && 
-                                    <h2 id="final-difference">
+                                    <h5 id="final-difference">
                                         You are <span style={{color: 'red'}}> ${(this.state.totalSpending - this.state.totalBudget).toFixed(2)}</span> over budget.
-                                    </h2>
+                                    </h5>
                             }
                         </div>
                     </section>
                 </div>
+                <footer>
+                    <div className="footer-wrapper">
+                        <p>Budgit is a personal project by Susie Kim</p>
+                        {/* <button className="button button-light">Back to Dashboard</button> */}
+                    </div>
+                </footer>
             </main>    
         );
     }

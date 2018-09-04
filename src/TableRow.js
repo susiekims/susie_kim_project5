@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import './styles/TableRow.css'
-// import firebase from './firebase';
 
 
 // create new class TableRow which is a React component
@@ -36,16 +34,17 @@ class TableRow extends Component {
 
     render() {
         const categories = this.props.categories;
-        // console.log('categories', categories);
         return (
-            // render Table Row which 5 different input
-            // give the row a unique Key, which got it from firebase which was generated when the new Row was created
             <tr className="row">
-                <td><input type="text" maxlength="20" id="item" onChange={this.handleChange} value={this.state.item} placeholder="Item"/></td>
-                <td><input type="date" id="date" onChange={this.handleChange} value={this.state.date}/></td>
-                <td>
+                <td className="col-1">
+                    <input type="text" malxlength="20" id="item" onChange={this.handleChange} value={this.state.item} placeholder="—"/>
+                </td>
+                <td className="col-2">
+                    <input type="date" id="date" onChange={this.handleChange} value={this.state.date}/>
+                </td>
+                <td className="col-3">
                     <select id="category" onChange={this.handleChange} value={this.state.category}>
-                        <option value="" defaultValue="">Select category</option>
+                        <option value="" defaultValue="">—</option>
                         <option value="income">Income</option>
                         {
                             categories.map((category) => {
@@ -54,17 +53,16 @@ class TableRow extends Component {
                                 )
                             })
                         }
-                    </select>   
-                    <i class="fas fa-sort-down"></i>                                 
+                    </select>                             
                 </td>
-                <td>
-                    <input type="text" maxlength="5" id="earned" onChange={this.handleChange} value={this.state.earned} style={{color: 'green'}} placeholder="-"/>
+                <td className="col-4">
+                    <input type="text" maxLength="7" id="earned" onChange={this.handleChange} value={this.state.earned} placeholder="—"/>
                 </td>
-                <td>
-                    <input type="text" maxlength="5" id="spent" onChange={this.handleChange} value={this.state.spent} style={{color: 'red'}} placeholder="-"/>
+                <td className="col-5">
+                    <input type="text" maxLength="7" id="spent" onChange={this.handleChange} value={this.state.spent} placeholder="—"/>
                 </td>
-                <td>
-                    <button id={this.state.key} onClick={this.props.deleteRow}><i class="fas fa-times"></i></button>
+                <td className="col-6">
+                    <button id={this.state.key} onClick={this.props.deleteRow}><i className="fas fa-times"></i></button>
                 </td>
             </tr>
            

@@ -39,11 +39,11 @@ class CategoryForm extends Component {
             <div className="budget-card category-form">
                 <h4>New Category</h4>
                 <form action="">
-                    <input type="text" maxlength="20"  id="name" onChange={this.handleChange} placeholder="Enter Category"/>
-                    <input type="text" maxlength="6" id="budget" onChange={this.handleChange} placeholder="Budget"/>
-                    <input type="color" maxlength="6" id="color" onChange={this.handleChange} 
+                    <input type="text" maxLength="20"  id="name" onChange={this.handleChange} placeholder="Enter Category"/>
+                    <input type="text" maxLength="6" id="budget" onChange={this.handleChange} placeholder="Budget"/>
+                    <input type="color" maxLength="6" id="color" onChange={this.handleChange} 
                     placeholder="Choose a color" />
-                    <input type="submit" id="submit-category" value="Add Category" onClick={this.handleSubmit}/>
+                    <input type="submit" pattern="[0-9]*" id="submit-category" value="Add Category" onClick={this.handleSubmit}/>
                 </form>
             </div>
         )

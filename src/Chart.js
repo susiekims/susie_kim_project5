@@ -3,56 +3,23 @@ import { Pie } from 'react-chartjs-2';
 
 class Chart extends Component {
 
-    // componentDidUpdate() {
-    //     console.log('hello!');
-        
-    // 
-
     constructor(props) {
         super(props);
         this.state = {
             options: {
                 maintainAspectRatio: false,
             },
-        //     chartData: {
-        //         labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
-        //         datasets: [{
-        //         label: "My First dataset",
-        //         backgroundColor: ['red','yellow','green','blue'],
-        //         data: [this.props.totals.groceries, 
-        //             this.props.totals.transportation , 
-        //             this.props.totals.entertainment, 
-        //             this.props.totals.housing],
-        //     }]
-        //   }
-
         }
     }
 
-
-    // updateChart = () => {
-    //     this.forceUpdate();
-    // }
-
     render() {
-        // console.log(this.props.totals, "chart!!!");
-        // const chartData = {
-        //     labels: ["Groceries", "Transportation", "Entertainment", "Housing"],
-        //     datasets: [{
-        //       label: "My First dataset",
-        //       backgroundColor: ['red','yellow','green','blue'],
-        //       data: [this.props.totals.groceries, 
-        //             this.props.totals.transportation , 
-        //             this.props.totals.entertainment, 
-        //             this.props.totals.housing],
-        //     }]
-        //   }
-      
         return (
             <div className="chart">
                 <h2>Expense Breakdown</h2>
                <Pie data={this.props.chartData} />
-               {/* <button onClick={this.updateChart}>REFRESH CHART</button> */}
+               {
+                   this.props.chartData.datasets[0].data.length === 0 && <p>Nothing to see here. Create categories and enter transactions to see data.</p>
+               }
             </div>
         )
     }
