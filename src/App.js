@@ -32,9 +32,9 @@ class App extends Component {
                 this.setState({user}, () => {
                     this.userRef = firebase.database().ref(`users/${this.state.user.uid}`);
                 })
-                this.userRef.on('value', (snapshot) => {
-                    console.log(snapshot.val());
-                });
+                // this.userRef.on('value', (snapshot) => {
+                //     console.log(snapshot.val());
+                // });
             }
         })
         

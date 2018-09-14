@@ -17,24 +17,34 @@ class Dashboard extends Component {
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
             this.setState({user})
+            this.sheetsRef = firebase.database().ref(`users/${this.state.user.uid}/sheets`);
+            this.sheetsRef.on('value', snapshot => {
+                if (snapshot.val()) {
+                    this.sortSheets(snapshot.val());
+                } else {
+                    this.setState({
+                        sheets: []
+                    })
+                }
+            })
+            
         })
-        this.sheetsRef = firebase.database().ref(`users/${this.state.user.uid}/sheets`);
-        this.sheetsRef.on('value', snapshot => {
-            if (snapshot.val()) {
-                this.sortSheets(snapshot.val());
-            } else {
-                this.setState({
-                    sheets: []
-                })
-            }
-        })
+
     }
 
     sortSheets = (data) => {
-        console.log('sorting', data);
-        let newdata = Object.entries(data);
-        // console.log(newdata);
-        console.log('HEY ITS A ME MARIO')
+        if (data === null) {
+            data = {}
+        }
+        let newData = Object.entries(data);
+        console.log(newData);
+        let sheets = newData.map(entry => {
+            return ({
+                    key: entry[0],
+                    title: entry[1].title
+                })    
+        })
+        this.setState({sheets})
     }
 
     deleteSheet() {
@@ -50,7 +60,7 @@ class Dashboard extends Component {
         const newSheet = {
             title: newSheetName
         }
-        this.props.createNewSheet(newSheetName);
+        this.props.createNewSheet(newSheet);
         console.log(newSheet);
     }
 
@@ -65,7 +75,7 @@ class Dashboard extends Component {
                             this.state.sheets.map((sheet) => {
                                 return (
                                     <div className="sheet-thumbnail" >
-                                        <h3>September Budget</h3>
+                                        <h3>{sheet.title}</h3>
                                         <button onClick={this.deleteSheet} id="delete-sheet"><i className="fas fa-times"></i></button>
                                         <button onClick={this.openSheet} id="open-sheet">Open sheet</button>
                                     </div>
