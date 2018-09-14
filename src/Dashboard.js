@@ -1,18 +1,40 @@
 // this is just a placeholder page for when I get authentication and routing working.
 
 import React, { Component } from 'react';
+import firebase from 'firebase';
+
+const auth = firebase.auth();
 
 class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            sheets: ['September Budget']
+            sheets: [],
+            user: {}
         }
     }
 
-    openSheet() {
-        document.getElementById('dashboard').style.display = 'none';
-        document.getElementById('home-page').style.display = 'block';
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => {
+            this.setState({user})
+        })
+        this.sheetsRef = firebase.database().ref(`users/${this.state.user.uid}/sheets`);
+        this.sheetsRef.on('value', snapshot => {
+            if (snapshot.val()) {
+                this.sortSheets(snapshot.val());
+            } else {
+                this.setState({
+                    sheets: []
+                })
+            }
+        })
+    }
+
+    sortSheets = (data) => {
+        console.log('sorting', data);
+        let newdata = Object.entries(data);
+        // console.log(newdata);
+        console.log('HEY ITS A ME MARIO')
     }
 
     deleteSheet() {
@@ -22,11 +44,20 @@ class Dashboard extends Component {
         }
     }
 
+    handleSubmit = () => {
+        console.log('handlesubmit');
+        const newSheetName = document.getElementById('new-sheet').value;
+        const newSheet = {
+            title: newSheetName
+        }
+        this.props.createNewSheet(newSheetName);
+        console.log(newSheet);
+    }
 
     render() {
         return (
             <section className="dashboard" id="dashboard">
-                <h1>Welcome, Susie</h1>
+                <h1>Welcome, {this.state.user.displayName}</h1>
                 <h2>Your sheets</h2>
                    
                     <div className="sheet-list">
@@ -43,7 +74,7 @@ class Dashboard extends Component {
                         }
                         <div className="sheet-thumbnail">
                             <input type="text" id="new-sheet" placeholder="Create New Sheet"/>
-                            <button id="new-sheet-button"><i className="fas fa-plus"></i></button>
+                            <button onClick={this.handleSubmit} id="new-sheet-button"><i className="fas fa-plus"></i></button>
                         </div>
                     </div>
             </section>

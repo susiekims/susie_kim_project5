@@ -400,10 +400,6 @@ footer {
     text-align: center;
 }
 
-#dashboard {
-  display: none;
-}
-
 .sheet-thumbnail {
     width: 200px;
     border: 1px solid black;
@@ -411,10 +407,3 @@ footer {
     padding: 30px;
 }
 
-#landing-page {
-    display: none;
-}
-
-#dashboard {
-    display: none;
-}
