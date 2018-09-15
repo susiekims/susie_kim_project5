@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import { Link } from 'react-router-dom';
 
 const auth = firebase.auth();
 
@@ -47,13 +48,6 @@ class Dashboard extends Component {
         this.setState({sheets})
     }
 
-    deleteSheet() {
-        const confirm = window.confirm('are you sure you want to delete this sheet?');
-        if (confirm) {
-            alert('deleted');
-        }
-    }
-
     handleSubmit = () => {
         console.log('handlesubmit');
         const newSheetName = document.getElementById('new-sheet').value;
@@ -74,10 +68,10 @@ class Dashboard extends Component {
                         {
                             this.state.sheets.map((sheet) => {
                                 return (
-                                    <div className="sheet-thumbnail" >
+                                    <div className="sheet-thumbnail" key={sheet.key}>
                                         <h3>{sheet.title}</h3>
-                                        <button onClick={this.deleteSheet} id="delete-sheet"><i className="fas fa-times"></i></button>
-                                        <button onClick={this.openSheet} id="open-sheet">Open sheet</button>
+                                        <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-sheet"><i className="fas fa-times"></i></button>
+                                        <Link to='/sheet' id={sheet.key} onClick={this.props.openSheet} className="open-sheet">Open sheet</Link>
                                     </div>
                                 )
                             })

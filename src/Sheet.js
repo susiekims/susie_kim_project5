@@ -162,9 +162,7 @@ class Sheet extends Component {
     }
 
     // push category to the category reference
-    addCategory = (newCategory) => {
-        categoriesRef.push(newCategory);
-    }
+    
 
     // delete category reference from firebase
     deleteCategory = (e) => {
@@ -229,20 +227,7 @@ class Sheet extends Component {
         }
 
         return (
-            <main>    
-                <div className="landing-page" id="landing-page">
-                    <div className="landing-content">
-                        <h1>Budgit</h1>
-                        <h2>Personal Expense Tracker</h2>
-                        <form>
-                            <input type="text" placeholder="Create an username" id="username"/>
-                            <input type="text" placeholder="Create a password" id="password"/>
-                            <input type="submit" onClick={this.handleLogin} value="Create an account" />
-                        </form>
-                    </div>
-                </div>
-                <Dashboard />
-
+            <div className="sheet page">    
                 <div className="Home" id="home-page">
                     <header>
                         <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
@@ -302,7 +287,7 @@ class Sheet extends Component {
                         <p>Budgit is a personal project by Susie Kim</p>
                     </div>
                 </footer>
-            </main>    
+            </div>    
         );
     }
 }

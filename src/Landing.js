@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import firebase from './firebase';
 
@@ -14,12 +14,6 @@ const auth = firebase.auth();
 
 // create App class
 class Landing extends Component {
-    constructor() {
-        super();
-        this.state = {
-            user: null
-        }
-    }
 
     render() {
         return(
@@ -34,6 +28,10 @@ class Landing extends Component {
                 <Link to="/dashboard">Try as Guest</Link>
                 {/* <Link to="/dashboard">Sign Up/Log In</Link> */}
                 <button onClick={this.props.login}>Login</button>
+                {
+                        this.props.user &&
+                        <Redirect to='/dashboard' />
+                    }
             </div>
         )
     }
