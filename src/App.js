@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch} from 'react-router-dom';
+import firebase from './firebase';
+import swal from 'sweetalert2';
 
 import './styles/App.css';
-
-// import Budget from './Budget';
-// import Chart from './Chart';
-// import Table from './Table';
-
 
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import Sheet from './Sheet';
-
-
-import firebase from './firebase';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
@@ -48,11 +42,26 @@ class App extends Component {
     }
 
     logout = () => {
-        auth.signOut().then(() => {
-            this.setState({
-                user: null,
-            });
+        swal({
+            title: 'Are you sure you want to log out?',
+            type: 'warning',
+            confirmButtonText: 'LOG OUT'
         })
+        .then((res) => {
+           let logout = res.value 
+            if (logout) {
+                swal({
+                    title: 'Logged out!',
+                    type: 'success'
+                })
+                auth.signOut().then(() => {
+                    this.setState({
+                        user: null,
+                    });
+                })
+            }
+        }) 
+    
     }
 
     createNewSheet = (newSheet) => {
@@ -61,31 +70,39 @@ class App extends Component {
     }
 
     deleteSheet = (e) => {
-        console.log('delete');
-        const confirm = window.confirm('are you sure you want to delete this sheet? all data will be deleted');
-        if (confirm) {
-            console.log(e.target.id);
-            firebase.database().ref(`users/${this.state.user.uid}/sheets/${e.target.id}`).remove();
-        }
+        let id = e.target.id;
+        swal({
+            title: 'Are you sure you want delete this sheet?',
+            type: 'warning',
+            text: 'All data in sheet will also be deleted.',
+            confirmButtonText: 'Delete'
+        })
+        .then((res) => {
+            if (res.value) {
+                swal({
+                    title: 'Sheet deleted.',
+                    type: 'success'
+                })
+                firebase.database().ref(`users/${this.state.user.uid}/sheets/${id}`).remove();
+                console.log(id);
+            }
+        }) 
     }
 
-    openSheet = (e) => {
-        console.log(e.target.id);
-    }
 
+   
     render() {
         return(
             <Router>
                 <Switch>
-
 
                     <Route path="/dashboard" render={(props) => (
                         <Dashboard {...props} openSheet={this.openSheet} createNewSheet={this.createNewSheet} deleteSheet={this.deleteSheet} login={this.login} logout={this.logout} user={this.state.user} />
                     ) }/>
 
 
-                    <Route path="/sheet/:sheet_id" render={(props) => (
-                        <Sheet {...props} user={this.state.user} />
+                    <Route path="/sheet/:sheet_name/:sheet_id" render={(props) => (
+                        <Sheet {...props} login={this.login} logout={this.logout} user={this.state.user} />
                     ) }/>
 
                     <Route exact path="/" render={(props) => (

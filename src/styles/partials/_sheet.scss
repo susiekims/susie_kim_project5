@@ -1,0 +1,292 @@
+#title {
+    display: block;
+    font-size: 3rem;
+    border: none;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+/*--------------------- Categories Styles ---------------- */
+
+.budget-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px 0px 0px 0px;
+}
+  
+.budget-card {
+    color: white;
+    margin: 0px 10px 15px 10px;
+    min-width: 200px;
+    height: 300px;
+    flex: 0 0 calc(100% / 4 - 20px);
+    padding: 20px;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow-y: scroll;
+}
+
+.delete-category {
+    position: absolute;
+    font-size: 2rem;
+    border: none;
+    color: white;
+    background: none;
+    top: 10px;
+    right: 10px;
+}
+
+.budget-card h3 {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.38);
+}
+
+.budget li p {
+    color: white;
+    width: 40%;
+}
+
+.budget li p:last-child {
+    width: 20%;
+}
+
+.budget-card h4 {
+    margin-bottom: 5px;
+}
+
+.budget-card h5 {
+    font-style: italic;
+}
+
+.category-form {
+    background: white;
+    color: #aaaaaa;
+    border: 1px solid #aaaaaa;
+}
+.category-form input {
+    font-size: 1.8rem;
+    border: none;
+    border: 1px solid #aaaaaa; 
+    border-radius: 1.8rem;
+    text-align: center;
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 8px 0px;
+}
+
+input[type=color] {
+    background: none;
+    padding: 5px 12px;
+    height: 35px;
+}
+
+input[type=submit] {
+    width: auto;
+    padding: 8px 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: #888888;
+    color: white;
+    font-weight: 200;
+}
+
+/* ------------------ Table Styles ------------------*/
+
+table {
+    width: 95%;
+    margin: 0 auto;
+    max-width: 1000px;
+    min-width: 500px;
+    font-size: 1.2rem;
+    padding: 25px 0
+}
+
+
+table #category {
+    background-image:url(./sort-down-solid.svg);
+    background-repeat: no-repeat;
+    background-position: 100% -5px;
+}
+
+table button {
+    border: none;
+    background: none;
+}
+  
+.add-row {
+    display: block;
+    border-radius: 1.8rem;
+    width: auto;
+    margin: 25px auto 0px auto;
+    padding: 8px 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: #888888;
+    color: white;
+    font-weight: 200;
+}
+  
+.row input {
+    border: none;
+    width: 100%;
+}
+
+.row input::placeholder {
+    color: #aaaaaa;
+}
+
+.row input[type=date], .row select {
+    width: 100px;
+}
+  
+th {
+    text-align: left;
+    padding: 25px 0px;
+}
+
+td {
+    padding: 15px 0px;
+}
+
+tr {
+    border-bottom: 1px solid #f2f2f2;
+}
+
+tr:last-child {
+    border-bottom: none;
+}
+
+.col-1, .col-2,{
+    width: 25%;
+}
+
+.col-3, .col-4, .col-5 { 
+    width: 16.7%;
+}
+
+.col-6 {
+    width: 3%;
+}
+
+
+/* -------------- Summary Styles -------------- */
+
+.summary-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 0 auto;
+    justify-content: space-between;
+    border: none;
+    padding: 0;
+}
+
+.summary-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.summary-card {
+    background: #f1f1f1;
+    flex: 0 0 calc(50% - 10px);
+    border-radius: 1.5rem;
+    padding: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+  
+.summary h5 {
+    text-align: center;
+    padding: 20px 0px;
+}
+
+.chart {
+    padding: 40px 0px;
+    width: 50%;
+    border-right: 1px solid #aaaaaa;
+}
+
+.summary {
+    width: 50%;
+    padding: 40px 0px 40px 40px;
+}
+
+.chart canvas {
+    width: 100%;
+}
+  
+.chart h2, .summary h2 {
+    padding-bottom: 20px;
+}
+  
+
+/*------------ Footer Styles ------------*/
+footer {
+    text-align: center;
+    padding: 120px 0px 20px 0px;
+    font-size: 1.2rem;
+    font-weight: 200;
+}
+
+/* --------------------- Media Queries --------------------*/
+
+@media (max-width: 980px) {
+    .budget-card {
+        flex-basis: calc(100% / 3 - 20px);
+    }
+}
+
+@media (max-width: 740px) {
+    .summary-container {
+        flex-direction: column;
+    }
+
+    .chart {
+        border: none;
+    }
+
+    .summary {
+        border-top: 1px solid #aaaaaa;
+    }
+
+    .chart, .summary{
+       width: 100%;
+    }
+
+    .summary {
+        padding: 40px 0px;
+    }
+
+    .budget-card {
+        flex-basis: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 535px) {
+
+    .table {
+        overflow-x: scroll;
+    }
+
+    .budget-card {
+        overflow: hidden;
+    }
+
+    .budget-list {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        margin: 0 auto;
+    }
+
+}
+
+
+@media (max-width: 340px) {
+    .summary-list {
+        display: flex;
+        flex-direction: column;
+    }    
+}

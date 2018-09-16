@@ -1,0 +1,79 @@
+html {
+    font-size: 62.5%;
+}
+  
+select {
+    border: none;
+    appearance: none;
+}
+  
+body {
+    font-size: 1rem;
+    font-family: Helvetica, sans-serif;
+    letter-spacing: 0.02rem;
+}
+  
+.button {
+    font-size: 1.2rem;
+    color: #898989;
+    border: 1px solid #aaaaaa;
+    background: none;
+    border-radius: 1.5rem;
+    padding: 5px 10px;
+}
+  
+button, input[type=submit] {
+    transition: opacity .3s;
+}
+  
+button:hover, input[type=submit]:hover {
+    opacity: 0.5;
+}
+
+section {
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 50px 0px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+p {
+    color: #aaaaaa;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: normal;
+}
+
+h2 {
+    font-weight: 200;
+    font-size: 2.6rem;
+    color: #aaaaaa;
+}
+
+h3 {
+    font-size: 2.6rem;
+}
+
+h4, h5 {
+    font-size: 1.2rem;
+}
+
+main {
+    animation-name: opening;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-delay: .5s;
+}
+
+@keyframes opening {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}

@@ -4,7 +4,10 @@ import './styles/App.css';
 import Budget from './Budget';
 import Chart from './Chart';
 import Table from './Table';
+import Header from './Header';
 import firebase from './firebase';
+import swal from 'sweetalert2';
+
 
 const auth = firebase.auth();
 
@@ -20,12 +23,12 @@ class Sheet extends Component {
     
   // create default state
   // state has a property of rows which is an array that contains the class TableRow
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             username: '',
             password: '',
-            title: '',
+            title: this.props.match.params.sheet_name,
             rows : [],
             categories: [],
             totals: [],
@@ -85,11 +88,22 @@ class Sheet extends Component {
 
   // removes row from firebase
     deleteRow = (e) => {
-        const confirm = window.confirm('Are you sure you want to delete this row?');
-        if (confirm) {
-            const rowRef = firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Data/${e.target.id}`);
-            rowRef.remove();
-        }
+        let id = e.target.id;
+        swal({
+            title: 'Are you sure you want delete this row?',
+            type: 'warning',
+            confirmButtonText: 'Delete'
+        })
+        .then((res) => {
+            if (res.value) {
+                swal({
+                    title: 'Row deleted.',
+                    type: 'success'
+                })
+                const rowRef = firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Data/${id}`);
+                rowRef.remove();
+            }
+        }) 
     }
 
   // get data from firebase and change it into a more accessble form
@@ -183,11 +197,22 @@ class Sheet extends Component {
 
     // delete category reference from firebase
     deleteCategory = (e) => {
-        const confirm = window.confirm('Are you sure you want to delete this category?');
-        if (confirm) {
-            firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Categories/${e.target.id}`).remove();
-        }
-        // let categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`)
+        let id = e.target.id;
+        swal({
+            title: 'Are you sure you want delete this category',
+            type: 'warning',
+            confirmButtonText: 'Delete'
+        })
+        .then((res) => {
+            if (res.value) {
+                swal({
+                    title: 'Category deleted.',
+                    type: 'success'
+                })
+                firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Categories/${id}`).remove();
+                console.log(id);
+            }
+        }) 
     }
     
     // get data from firebase and change to more accessible form
@@ -246,10 +271,8 @@ class Sheet extends Component {
         return (
             <div className="sheet page">    
                 <div className="Home" id="home-page">
-                    <header>
-                        <input type="text" id="title" placeholder="Untitled Budget" value={this.state.title} onChange={this.handleChange}/>
-                        {/* <button className="button button-light">Back to Dashboard</button> */}
-                    </header>
+                    <Header user={this.props.user} login={this.props.login} logout={this.props.logout}/>
+                    <h2 id="title">{this.state.title}</h2>
                     <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals} addCategory={this.addCategory} rows={this.state.rows}/>
                     {/* <CategoryForm addCategory={this.addCategory} /> */}
                     <Table rows={this.state.rows} 

@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
+import Header from './Header';
 
 const auth = firebase.auth();
 
@@ -60,7 +61,8 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <section className="dashboard" id="dashboard">
+            <div className="dashboard" id="dashboard">
+                <Header user={this.props.user} login={this.props.login} logout={this.props.logout}/>
                 <h1>Welcome, {this.state.user.displayName}</h1>
                 <h2>Your sheets</h2>
                    
@@ -71,7 +73,7 @@ class Dashboard extends Component {
                                     <div className="sheet-thumbnail" key={sheet.key}>
                                         <h3>{sheet.title}</h3>
                                         <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-sheet"><i className="fas fa-times"></i></button>
-                                        <Link to={`/sheet/${sheet.key}`} id={sheet.key} onClick={this.props.openSheet} className="open-sheet">Open sheet</Link>
+                                        <Link to={`/sheet/${sheet.title}/${sheet.key}`} id={sheet.key} className="open-sheet">Open sheet</Link>
                                     </div>
                                 )
                             })
@@ -81,7 +83,7 @@ class Dashboard extends Component {
                             <button onClick={this.handleSubmit} id="new-sheet-button"><i className="fas fa-plus"></i></button>
                         </div>
                     </div>
-            </section>
+            </div>
         )
 
     }

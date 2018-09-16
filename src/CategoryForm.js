@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import swal from 'sweetalert2';
 
 class CategoryForm extends Component {
     constructor() {
@@ -29,7 +30,9 @@ class CategoryForm extends Component {
             document.getElementById('color').value = '';
             document.getElementById('budget').value = '';
         } else {
-            alert('Please enter a category, budget, and colour.');
+            swal({
+                text: 'Please fill out the form carefully.'
+            })
         }
     }
 
@@ -39,7 +42,7 @@ class CategoryForm extends Component {
                 <h4>New Category</h4>
                 <form action="">
                     <input type="text" maxLength="20"  id="name" onChange={this.handleChange} placeholder="Enter Category"/>
-                    <input type="text" maxLength="6" id="budget" onChange={this.handleChange} placeholder="Budget"/>
+                    <input type="number" max="999999" id="budget" onChange={this.handleChange} placeholder="Budget"/>
                     <input type="color" maxLength="6" id="color" onChange={this.handleChange} 
                     placeholder="Choose a color" />
                     <input type="submit" pattern="[0-9]*" id="submit-category" value="Add Category" onClick={this.handleSubmit}/>
