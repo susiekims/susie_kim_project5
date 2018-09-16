@@ -4,14 +4,16 @@ import './styles/App.css';
 import Budget from './Budget';
 import Chart from './Chart';
 import Table from './Table';
-import Dashboard from './Dashboard';
 import firebase from './firebase';
 
-let userID = 'susie';
-let sheetName = 'September Budget'
-const userRef = firebase.database().ref(`users/${userID}`);
-const budgetRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data`);
-const categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories`);
+const auth = firebase.auth();
+
+
+// let userID = 'susie';
+// let sheetName = 'September Budget'
+// const userRef = firebase.database().ref(`users/${userID}`);
+// const budgetRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data`);
+// const categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories`);
 
 // create App class
 class Sheet extends Component {
@@ -35,18 +37,31 @@ class Sheet extends Component {
 
     // change listeners for databases
     componentDidMount() {
-        budgetRef.on('value', (snapshot) => {
-            this.sortData(snapshot.val());
-        });
-        categoriesRef.on('value', (snapshot) => {
-            if (snapshot.val()) {
-                this.sortCategories(snapshot.val());
-            } else {
-                this.setState({
-                    categories: []
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({user}, () => {
+                    
+                    this.budgetRef = firebase.database().ref(`users/${user.uid}/Sheets/${this.props.match.params.sheet_id}/Data`);
+                    this.categoriesRef = firebase.database().ref(`users/${user.uid}/Sheets/${this.props.match.params.sheet_id}/Categories`);
+
+                    this.budgetRef.on('value', (snapshot) => {
+                        this.sortData(snapshot.val());
+                    });
+                    this.categoriesRef.on('value', (snapshot) => {
+                        if (snapshot.val()) {
+                            this.sortCategories(snapshot.val());
+                        } else {
+                            this.setState({
+                                categories: []
+                            })
+                        }
+                    })
+
                 })
             }
         })
+
     }
 
     // change state of title
@@ -58,7 +73,7 @@ class Sheet extends Component {
 
     // push empty row onto firebase
     addRow = () => {
-        budgetRef.push({
+        this.budgetRef.push({
             key: '',
             item: '',
             date: '',
@@ -72,7 +87,7 @@ class Sheet extends Component {
     deleteRow = (e) => {
         const confirm = window.confirm('Are you sure you want to delete this row?');
         if (confirm) {
-            const rowRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${e.target.id}`);
+            const rowRef = firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Data/${e.target.id}`);
             rowRef.remove();
         }
     }
@@ -154,23 +169,25 @@ class Sheet extends Component {
 
     // push row data to firebase
     pushToFirebase = (target, value, data) => {
-        firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${data.key}`).once('value', (snapshot)=> {
+        firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Data/${data.key}`).once('value', (snapshot)=> {
             let currentVal = snapshot.val();
             Object.assign(currentVal, {[target]:value});
-            firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data/${data.key}`).set(currentVal);
+            firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Data/${data.key}`).set(currentVal);
         })
     }
 
     // push category to the category reference
-    
+    addCategory = (obj) => {
+        this.categoriesRef.push(obj);
+    }
 
     // delete category reference from firebase
     deleteCategory = (e) => {
         const confirm = window.confirm('Are you sure you want to delete this category?');
         if (confirm) {
-            firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`).remove();
+            firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Categories/${e.target.id}`).remove();
         }
-        let categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`)
+        // let categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories/${e.target.id}`)
     }
     
     // get data from firebase and change to more accessible form

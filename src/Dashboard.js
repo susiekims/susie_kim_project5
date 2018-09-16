@@ -71,7 +71,7 @@ class Dashboard extends Component {
                                     <div className="sheet-thumbnail" key={sheet.key}>
                                         <h3>{sheet.title}</h3>
                                         <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-sheet"><i className="fas fa-times"></i></button>
-                                        <Link to='/sheet' id={sheet.key} onClick={this.props.openSheet} className="open-sheet">Open sheet</Link>
+                                        <Link to={`/sheet/${sheet.key}`} id={sheet.key} onClick={this.props.openSheet} className="open-sheet">Open sheet</Link>
                                     </div>
                                 )
                             })

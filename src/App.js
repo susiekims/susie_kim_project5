@@ -84,7 +84,7 @@ class App extends Component {
                     ) }/>
 
 
-                    <Route path="/sheet" render={(props) => (
+                    <Route path="/sheet/:sheet_id" render={(props) => (
                         <Sheet {...props} user={this.state.user} />
                     ) }/>
 

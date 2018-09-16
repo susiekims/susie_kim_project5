@@ -63,7 +63,6 @@ class Budget extends Component {
                         })
                     }
                     <CategoryForm addCategory={this.props.addCategory}/>
-                    <div className="budget-card margin-div"></div>
                 </div>
             </section>
         )
