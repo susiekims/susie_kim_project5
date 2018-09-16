@@ -16,8 +16,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            user: null,
-            currentSheet: '',
+            user: null
         }
     }
 

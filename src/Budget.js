@@ -43,7 +43,7 @@ class Budget extends Component {
                                         category.budget - this.props.totals[category.name] > 0 &&
                                         <h5>You have ${ (category.budget - this.props.totals[category.name]).toFixed(2)} left to spend.</h5>   
                                     }
-                                    <button className="delete-category" id={category.key} onClick={this.props.deleteCategory}><i className="fas fa-times"></i></button>
+                                    <button className="delete-button" id={category.key} onClick={this.props.deleteCategory}><i className="fas fa-times"></i></button>
                                     {/* <button className="button show-history" id={category.key} onClick={this.showHistory}>Show History</button> */}
                                     {/* <ul id={`${category.key}-history`}>
                                         {

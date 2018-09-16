@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import Header from './Header';
+import swal from 'sweetalert2';
 
 const auth = firebase.auth();
 
@@ -49,40 +50,53 @@ class Dashboard extends Component {
         this.setState({sheets})
     }
 
-    handleSubmit = () => {
-        console.log('handlesubmit');
+    handleSubmit = (e) => {
+        e.preventDefault();
         const newSheetName = document.getElementById('new-sheet').value;
-        const newSheet = {
-            title: newSheetName
+        if (newSheetName.length > 0) {
+            const newSheet = {
+                title: newSheetName
+            }
+            this.props.createNewSheet(newSheet);
+            console.log(newSheet);
+        } else {
+            swal({
+                title: "Please enter a title for your sheet",
+                type: 'error'
+            })
         }
-        this.props.createNewSheet(newSheet);
-        console.log(newSheet);
+        document.getElementById('new-sheet').value = '';
     }
 
     render() {
         return (
-            <div className="dashboard" id="dashboard">
+            <div className="dashboard fade" id="dashboard">
                 <Header user={this.props.user} login={this.props.login} logout={this.props.logout}/>
-                <h1>Welcome, {this.state.user.displayName}</h1>
-                <h2>Your sheets</h2>
-                   
+                <div className="dashboard-wrapper">
+                    {/* <h1>Welcome, {this.state.user.displayName}</h1> */}
+                    <h2 className="title">{this.state.user.displayName}'s sheets</h2>
+                    
                     <div className="sheet-list">
                         {
                             this.state.sheets.map((sheet) => {
                                 return (
                                     <div className="sheet-thumbnail" key={sheet.key}>
                                         <h3>{sheet.title}</h3>
-                                        <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-sheet"><i className="fas fa-times"></i></button>
-                                        <Link to={`/sheet/${sheet.title}/${sheet.key}`} id={sheet.key} className="open-sheet">Open sheet</Link>
+                                        <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-button-dark"><i className="fas fa-times"></i></button>
+                                        <Link to={`/sheet/${sheet.title.replace(/ /g,"_")}/${sheet.key}`} id={sheet.key} className="dark-button open-sheet">Open sheet</Link>
                                     </div>
                                 )
                             })
                         }
+
                         <div className="sheet-thumbnail">
-                            <input type="text" id="new-sheet" placeholder="Create New Sheet"/>
-                            <button onClick={this.handleSubmit} id="new-sheet-button"><i className="fas fa-plus"></i></button>
+                            <form action="" onSubmit={this.handleSubmit}>
+                                <input type="text" id="new-sheet" maxLength="12" placeholder="New Sheet Title"/>
+                                <input type="submit" className="dark-button" id="new-sheet-button" value="Create New Sheet" />
+                            </form>
                         </div>
                     </div>
+                </div>
             </div>
         )
 

@@ -13,7 +13,24 @@ body {
     letter-spacing: 0.02rem;
 }
   
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .button {
+    text-align: center;
+    display: block;
     font-size: 1.2rem;
     color: #898989;
     border: 1px solid #aaaaaa;
@@ -21,12 +38,36 @@ body {
     border-radius: 1.5rem;
     padding: 5px 10px;
 }
-  
+
+.dark-button {
+    text-align: center;
+    display: block;
+    border-radius: 1.8rem;
+    width: auto;
+    margin: 25px auto 0px auto;
+    padding: 8px 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: #888888;
+    color: white;
+    font-weight: 200;
+}
+
+input[type=submit] {
+    width: auto;
+    padding: 8px 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: #888888;
+    color: white;
+    font-weight: 200;
+}
+
 button, input[type=submit] {
     transition: opacity .3s;
 }
   
-button:hover, input[type=submit]:hover {
+button:hover, input[type=submit]:hover, .dark-button:hover, .button:hover {
     opacity: 0.5;
 }
 
@@ -43,11 +84,11 @@ p {
 }
 
 h1, h2, h3, h4, h5 {
-    font-weight: normal;
+    font-weight: 200;
 }
 
 h2 {
-    font-weight: 200;
+    // font-weight: 200;
     font-size: 2.6rem;
     color: #aaaaaa;
 }
@@ -60,11 +101,10 @@ h4, h5 {
     font-size: 1.2rem;
 }
 
-main {
+.fade {
     animation-name: opening;
     animation-duration: 1s;
     animation-fill-mode: both;
-    animation-delay: .5s;
 }
 
 @keyframes opening {
@@ -76,4 +116,14 @@ main {
         transform: translateY(0px);
         opacity: 1;
     }
+}
+
+.title {
+    display: block;
+    font-size: 3rem;
+    border: none;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 50px;
+    color: black;
 }

@@ -28,7 +28,7 @@ class Sheet extends Component {
         this.state = {
             username: '',
             password: '',
-            title: this.props.match.params.sheet_name,
+            title: this.props.match.params.sheet_name.replace(/_/g, " "),
             rows : [],
             categories: [],
             totals: [],
@@ -269,10 +269,10 @@ class Sheet extends Component {
         }
 
         return (
-            <div className="sheet page">    
+            <div className="sheet fade">    
                 <div className="Home" id="home-page">
                     <Header user={this.props.user} login={this.props.login} logout={this.props.logout}/>
-                    <h2 id="title">{this.state.title}</h2>
+                    <h2 className="title">{this.state.title}</h2>
                     <Budget deleteCategory={this.deleteCategory} categories={this.state.categories} totals={this.state.totals} addCategory={this.addCategory} rows={this.state.rows}/>
                     {/* <CategoryForm addCategory={this.addCategory} /> */}
                     <Table rows={this.state.rows} 

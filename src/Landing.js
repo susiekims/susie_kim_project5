@@ -3,11 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 
 import firebase from './firebase';
 
-let userID = 'susie';
-let sheetName = 'September Budget'
-const userRef = firebase.database().ref(`users/${userID}`);
-const budgetRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Data`);
-const categoriesRef = firebase.database().ref(`users/${userID}/Sheets/${sheetName}/Categories`);
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
