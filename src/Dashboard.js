@@ -74,7 +74,7 @@ class Dashboard extends Component {
                 <Header user={this.props.user} login={this.props.login} logout={this.props.logout}/>
                 <div className="dashboard-wrapper">
                     {/* <h1>Welcome, {this.state.user.displayName}</h1> */}
-                    <h2 className="title">{this.state.user.displayName}'s sheets</h2>
+                    <h2 className="title">{this.state.user.displayName}'s Dashboard</h2>
                     
                     <div className="sheet-list">
                         {
@@ -97,6 +97,11 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
+                <footer>
+                    <div className="footer-wrapper">
+                        <p>BudgIt is a personal project by Susie Kim</p>
+                    </div>
+                </footer>
             </div>
         )
 

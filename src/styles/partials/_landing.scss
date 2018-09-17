@@ -1,12 +1,44 @@
-.landing-page {
-    width: 100vw;
-    height: 100vh;
+.landing {
+    h1 {
+        font-size: 5rem;
+    }
+    h3 {
+        font-size: 3.5rem;
+    }
 }
 
-// .landing-content {
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     text-align: center;
-// }
+.welcome {
+    width: 100%;
+    height: 100vh;
+    max-width: 1500px;
+    background-image: url('./hero.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    p {
+        font-size: 2rem;
+    }
+}
+
+
+.how-to section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    p {
+        font-size: 1.8rem;
+        color: black;
+    }
+}
+
+.how-to-text, .how-to-image {
+    flex-basis: 48%;
+}
+
+.iphone {
+    object-fit: contain;
+   max-height: 500px;
+}
+

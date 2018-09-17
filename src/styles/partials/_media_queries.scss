@@ -1,0 +1,65 @@
+@media (max-width: 980px) {
+    .budget-card {
+        flex-basis: calc(100% / 3 - 20px);
+    }
+}
+
+@media (max-width: 740px) {
+
+    .summary-container {
+        flex-direction: column;
+    }
+
+    .chart {
+        border: none;
+    }
+
+    .summary {
+        border-top: 1px solid #aaaaaa;
+    }
+
+    .chart, .summary{
+       width: 100%;
+    }
+
+    .summary {
+        padding: 40px 0px;
+    }
+
+    .budget-card, .sheet-thumbnail {
+        flex-basis: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 535px) {
+
+    .row input {
+        font-size: .9rem;
+        text-align: left;
+        border: none;
+        width: 100%;
+    }
+
+    .table {
+        overflow-x: scroll;
+    }
+
+    .budget-card {
+        overflow: hidden;
+    }
+
+    .budget-list {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        margin: 0 auto;
+    }
+
+}
+
+
+@media (max-width: 340px) {
+    .summary-list {
+        display: flex;
+        flex-direction: column;
+    }    
+}

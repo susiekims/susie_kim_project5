@@ -16,7 +16,8 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            user: null
+            user: null,
+            redirect: false
         }
     }
 
@@ -36,6 +37,7 @@ class App extends Component {
         auth.signInWithPopup(provider).then(res => {
             this.setState({
                 user: res.user,
+                redirect: true
             })
         });
     }
@@ -99,13 +101,12 @@ class App extends Component {
                         <Dashboard {...props} openSheet={this.openSheet} createNewSheet={this.createNewSheet} deleteSheet={this.deleteSheet} login={this.login} logout={this.logout} user={this.state.user} />
                     ) }/>
 
-
                     <Route path="/sheet/:sheet_name/:sheet_id" render={(props) => (
                         <Sheet {...props} login={this.login} logout={this.logout} user={this.state.user} />
                     ) }/>
 
                     <Route exact path="/" render={(props) => (
-                        <Landing {...props} login={this.login} logout={this.logout} user={this.state.user} />
+                        <Landing {...props} login={this.login} logout={this.logout} user={this.state.user} redirect={this.state.redirect}/>
                     ) }/>
 
             

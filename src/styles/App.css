@@ -143,7 +143,8 @@ select {
 body {
   font-size: 1rem;
   font-family: Helvetica, sans-serif;
-  letter-spacing: 0.02rem; }
+  letter-spacing: 0.02rem;
+  font-weight: 200; }
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -202,9 +203,6 @@ section {
   padding: 50px 0px;
   border-bottom: 1px solid #aaaaaa; }
 
-p {
-  color: #aaaaaa; }
-
 h1, h2, h3, h4, h5 {
   font-weight: 200; }
 
@@ -237,12 +235,21 @@ h4, h5 {
   border: none;
   text-align: center;
   margin: 0 auto;
-  padding-top: 50px;
   color: black; }
+
+footer {
+  width: 100%;
+  position: relaive;
+  bottom: 0;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 200;
+  padding: 30px 0px; }
 
 header {
   width: 95%;
-  margin: 10px auto;
+  margin: 0 auto;
+  padding-top: 10px;
   display: flex;
   justify-content: space-between; }
   header ul li {
@@ -252,9 +259,42 @@ header {
 .nav-button {
   width: 80px; }
 
-.landing-page {
-  width: 100vw;
-  height: 100vh; }
+.landing h1 {
+  font-size: 5rem; }
+
+.landing h3 {
+  font-size: 3.5rem; }
+
+.welcome {
+  width: 100%;
+  height: 100vh;
+  max-width: 1500px;
+  background-image: url("./hero.png");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center; }
+  .welcome p {
+    font-size: 2rem; }
+
+.how-to section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .how-to section p {
+    font-size: 1.8rem;
+    color: black; }
+
+.how-to-text, .how-to-image {
+  flex-basis: 48%; }
+
+.iphone {
+  object-fit: contain;
+  max-height: 500px; }
+
+.dashboard {
+  position: relative;
+  height: 100%; }
 
 .dashboard-wrapper {
   max-width: 1000px;
@@ -290,6 +330,9 @@ header {
   overflow: hidden; }
 
 /*--------------------- Categories Styles ---------------- */
+.sheet p {
+  color: #aaaaaa; }
+
 .budget-list {
   display: flex;
   flex-wrap: wrap;
@@ -397,6 +440,8 @@ table button {
   font-weight: 200; }
 
 .row input {
+  font-size: 1.2rem;
+  text-align: left;
   border: none;
   width: 100%; }
 
@@ -404,7 +449,8 @@ table button {
   color: #aaaaaa; }
 
 .row input[type=date], .row select {
-  width: 100px; }
+  width: 100px;
+  margin: 0; }
 
 th {
   text-align: left;
@@ -470,13 +516,6 @@ tr:last-child {
   padding-bottom: 20px; }
 
 /*------------ Footer Styles ------------*/
-footer {
-  text-align: center;
-  padding: 120px 0px 20px 0px;
-  font-size: 1.2rem;
-  font-weight: 200; }
-
-/* --------------------- Media Queries --------------------*/
 @media (max-width: 980px) {
   .budget-card {
     flex-basis: calc(100% / 3 - 20px); } }
@@ -492,10 +531,15 @@ footer {
     width: 100%; }
   .summary {
     padding: 40px 0px; }
-  .budget-card {
+  .budget-card, .sheet-thumbnail {
     flex-basis: calc(50% - 20px); } }
 
 @media (max-width: 535px) {
+  .row input {
+    font-size: .9rem;
+    text-align: left;
+    border: none;
+    width: 100%; }
   .table {
     overflow-x: scroll; }
   .budget-card {

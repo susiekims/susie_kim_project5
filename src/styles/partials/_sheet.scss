@@ -1,5 +1,9 @@
 /*--------------------- Categories Styles ---------------- */
-
+.sheet {
+    p {
+        color: #aaaaaa;
+    }
+}
 .budget-list {
     display: flex;
     flex-wrap: wrap;
@@ -127,6 +131,8 @@ table button {
 }
   
 .row input {
+    font-size: 1.2rem;
+    text-align: left;
     border: none;
     width: 100%;
 }
@@ -137,6 +143,7 @@ table button {
 
 .row input[type=date], .row select {
     width: 100px;
+    margin: 0;
 }
   
 th {
@@ -222,69 +229,5 @@ tr:last-child {
 
 
 /*------------ Footer Styles ------------*/
-footer {
-    text-align: center;
-    padding: 120px 0px 20px 0px;
-    font-size: 1.2rem;
-    font-weight: 200;
-}
-
-/* --------------------- Media Queries --------------------*/
-
-@media (max-width: 980px) {
-    .budget-card {
-        flex-basis: calc(100% / 3 - 20px);
-    }
-}
-
-@media (max-width: 740px) {
-    .summary-container {
-        flex-direction: column;
-    }
-
-    .chart {
-        border: none;
-    }
-
-    .summary {
-        border-top: 1px solid #aaaaaa;
-    }
-
-    .chart, .summary{
-       width: 100%;
-    }
-
-    .summary {
-        padding: 40px 0px;
-    }
-
-    .budget-card {
-        flex-basis: calc(50% - 20px);
-    }
-}
-
-@media (max-width: 535px) {
-
-    .table {
-        overflow-x: scroll;
-    }
-
-    .budget-card {
-        overflow: hidden;
-    }
-
-    .budget-list {
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        margin: 0 auto;
-    }
-
-}
 
 
-@media (max-width: 340px) {
-    .summary-list {
-        display: flex;
-        flex-direction: column;
-    }    
-}
