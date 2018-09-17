@@ -20,17 +20,19 @@ class Landing extends Component {
         return(
             <div className="landing page">
                 <div className="welcome">
-                    <h1>BudgIt</h1>
-                    <p>Keeping track of your spending, streamlined.</p>
-                    <Link to="/dashboard">Try as Guest</Link>
-                    <button onClick={this.props.login}>Login</button>
-                    {
-                        this.props.user &&
-                        <Redirect to='/dashboard' />
-                    }
+                    <div className="welcome-text">
+                        <h1>BudgIt</h1>
+                        <p>Keeping track of your spending, streamlined.</p>
+                        <a href="#howto" className="dark-button">How it works</a>
+                        <button className="dark-button" onClick={this.props.login}>Sign Up/Log In</button>
+                        {
+                            this.props.user &&
+                            <Redirect to='/dashboard' />
+                        }
+                    </div>
                 </div>
 
-                <div className="how-to">   
+                <div className="how-to" id="howto">   
                     <h2>How to BudgIt</h2>
 
                     <section>
@@ -61,6 +63,10 @@ class Landing extends Component {
                             <p>See a summary of all your spending habits and save it for later. You can refer back to any sheet you created in your Dashboard</p>
                         </div>
                     </section>
+                    <div className="try-now">
+                        <h3>Try it today, free.</h3>
+                        <button className="dark-button" onClick={this.props.login}>Sign Up/Log In</button>
+                    </div>
                 </div>
                 <footer>
                     <div className="footer-wrapper">

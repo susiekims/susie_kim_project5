@@ -134,7 +134,8 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
   padding: 0; }
 
 html {
-  font-size: 62.5%; }
+  font-size: 62.5%;
+  scroll-behavior: smooth; }
 
 select {
   border: none;
@@ -156,7 +157,8 @@ input[type=number] {
 
 a {
   text-decoration: none;
-  color: inherit; }
+  color: inherit;
+  cursor: pointer; }
 
 .button {
   text-align: center;
@@ -166,7 +168,8 @@ a {
   border: 1px solid #aaaaaa;
   background: none;
   border-radius: 1.5rem;
-  padding: 5px 10px; }
+  padding: 5px 10px;
+  cursor: pointer; }
 
 .dark-button {
   text-align: center;
@@ -179,7 +182,8 @@ a {
   font-size: 1.2rem;
   background: #888888;
   color: white;
-  font-weight: 200; }
+  font-weight: 200;
+  cursor: pointer; }
 
 input[type=submit] {
   width: auto;
@@ -259,11 +263,11 @@ header {
 .nav-button {
   width: 80px; }
 
-.landing h1 {
-  font-size: 5rem; }
-
-.landing h3 {
-  font-size: 3.5rem; }
+.landing button, .landing a {
+  font-size: 2rem;
+  width: 200px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+  display: block; }
 
 .welcome {
   width: 100%;
@@ -274,8 +278,20 @@ header {
   background-position: center;
   color: white;
   text-align: center; }
-  .welcome p {
-    font-size: 2rem; }
+
+.welcome-text {
+  position: relative;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  .welcome-text p {
+    font-size: 3rem; }
+  .welcome-text h1 {
+    font-size: 7rem;
+    font-weight: 500; }
+  .welcome-text h3 {
+    font-size: 3.5rem; }
 
 .how-to section {
   display: flex;
@@ -291,6 +307,13 @@ header {
 .iphone {
   object-fit: contain;
   max-height: 500px; }
+
+.try-now {
+  padding: 70px 0; }
+  .try-now h3 {
+    font-size: 5rem;
+    display: block;
+    text-align: center; }
 
 .dashboard {
   position: relative;
