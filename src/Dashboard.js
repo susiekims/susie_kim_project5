@@ -37,13 +37,13 @@ class Dashboard extends Component {
         if (data === null) {
             data = {}
         }
-        let newData = Object.entries(data);
-        let sheets = newData.map(entry => {
+        let sheets = Object.keys(data).map(key => {
             return ({
-                    key: entry[0],
-                    title: entry[1].title
+                    key: key,
+                    title: data[key].title
                 })    
-        })
+        });
+    
         this.setState({sheets})
     }
 

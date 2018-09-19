@@ -111,14 +111,25 @@ class Sheet extends Component {
         if (obj === null) {
             obj = {};
         } 
-        const rowArray = Object.entries(obj).map((row) => {
+        // const rowArray = Object.entries(obj).map((row) => {
+        //     return ({
+        //         key: row[0],
+        //         item: row[1].item,
+        //         category: row[1].category,
+        //         date: row[1].date,
+        //         earned: row[1].earned && parseFloat(row[1].earned),
+        //         spent: row[1].spent && parseFloat(row[1].spent)
+        //     });
+        // })
+
+        const rowArray = Object.keys(obj).map((key) => {
             return ({
-                key: row[0],
-                item: row[1].item,
-                category: row[1].category,
-                date: row[1].date,
-                earned: row[1].earned && parseFloat(row[1].earned),
-                spent: row[1].spent && parseFloat(row[1].spent)
+                key: key,
+                item: obj[key].item,
+                category: obj[key].category,
+                date: obj[key].category,
+                earned: obj[key].earned && parseFloat(obj[key].earned),
+                spent: obj[key].spent && parseFloat(obj[key].spent)
             });
         })
 
@@ -218,21 +229,31 @@ class Sheet extends Component {
     // get data from firebase and change to more accessible form
     sortCategories = (obj) => {
         if (obj !== null) {
-            const categoriesArray = Object.entries(obj).map((category)=> {
+            const categoriesArray = Object.keys(obj).map((key)=> {
                 return ({
-                    key: category[0],
-                    name: category[1].name,
-                    budget: category[1].budget,
-                    color: category[1].color
+                    key: key,
+                    name: obj[key].name,
+                    budget: obj[key].budget,
+                    color: obj[key].color
                 })
             })
             
             if (categoriesArray.length > 0) {
-                const totalsArray = Object.values(obj).map((category) => {
-                    return ({
-                        [category.name]: 0,
-                    })
+                const x= Object.keys(obj);
+                const totalsArray = x.map((key) => {
+                    return (
+                       {[obj[key].name] : 0}
+                     ) 
                 })
+
+                // const test = Object.values(obj).map((category) => {
+                //     return ({
+                //         [category.name]: 0,
+                //     })
+                // })
+
+                // console.log(test);
+
                 let mergedTotals = Object.assign(...totalsArray);
                 this.setState({
                     categories: categoriesArray,
@@ -254,11 +275,15 @@ class Sheet extends Component {
 
     render() {
         let labels = Object.keys(this.state.totals);
-        let data = Object.values(this.state.totals);
-        let colors = Object.values(this.state.categories).map((category) => {
-            return category.color
+        let data = Object.keys(this.state.totals).map(key => {
+            return this.state.totals[key]
         });
+        let colors = Object.keys(this.state.categories).map(key => {
+            return this.state.categories[key].color;
+        })
 
+    
+        
         const chartData = {
         labels: labels,
             datasets: [{
