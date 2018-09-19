@@ -5,14 +5,14 @@ class Header extends Component {
     render() {
         return (
             <header>
-                <Link exact to="/"><h1>BudgIt</h1></Link>
+                <h1>BudgIt</h1>
                 <ul>
                     <li>
-                        {   this.props.user == null &&
+                        {   this.props.user === null &&
                             <Redirect to="/" />
                         }
                         {
-                            window.location.href !== 'http://localhost:3000/dashboard' &&
+                            window.location.href !== 'https://expense-tracker-v2.firebaseapp.com/dashboard' &&
                             <Link className="button nav-button" to="/dashboard">Dashboard</Link>                    
                         }
                     </li>

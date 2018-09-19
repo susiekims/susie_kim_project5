@@ -13,7 +13,7 @@ class Dashboard extends Component {
         super();
         this.state = {
             sheets: [],
-            user: {}
+            user: {},
         }
     }
 
@@ -29,10 +29,8 @@ class Dashboard extends Component {
                         sheets: []
                     })
                 }
-            })
-            
+            }) 
         })
-
     }
 
     sortSheets = (data) => {
@@ -40,7 +38,6 @@ class Dashboard extends Component {
             data = {}
         }
         let newData = Object.entries(data);
-        console.log(newData);
         let sheets = newData.map(entry => {
             return ({
                     key: entry[0],
@@ -58,7 +55,6 @@ class Dashboard extends Component {
                 title: newSheetName
             }
             this.props.createNewSheet(newSheet);
-            console.log(newSheet);
         } else {
             swal({
                 title: "Please enter a title for your sheet",
@@ -74,7 +70,11 @@ class Dashboard extends Component {
                 <Header user={this.props.user} login={this.props.login} logout={this.props.logout}/>
                 <div className="dashboard-wrapper">
                     {/* <h1>Welcome, {this.state.user.displayName}</h1> */}
-                    <h2 className="title">{this.state.user.displayName}'s Dashboard</h2>
+                    <h2 className="title">{
+                        this.state.user.displayName === null ?
+                        'Guest' :
+                        this.state.user.displayName
+                        }'s Dashboard</h2>
                     
                     <div className="sheet-list">
                         {

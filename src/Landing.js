@@ -23,8 +23,11 @@ class Landing extends Component {
                     <div className="welcome-text">
                         <h1>BudgIt</h1>
                         <p>Keeping track of your spending, streamlined.</p>
-                        <a href="#howto" className="dark-button">How it works</a>
-                        <button className="dark-button" onClick={this.props.login}>Sign Up/Log In</button>
+                        <div className="buttons">
+                            <button className="landing-button" onClick={this.props.login}>Sign Up/Log In</button>
+                            <button className="landing-button" onClick={this.props.guestLogin}>Try as Guest</button>
+                        </div>
+                        <a href="#howto">How it works</a>
                         {
                             this.props.user &&
                             <Redirect to='/dashboard' />
@@ -64,8 +67,8 @@ class Landing extends Component {
                         </div>
                     </section>
                     <div className="try-now">
-                        <h3>Try it today, free.</h3>
-                        <button className="dark-button" onClick={this.props.login}>Sign Up/Log In</button>
+                        <h2>Try it today, free.</h2>
+                        <button className="landing-button" onClick={this.props.login}>Sign Up/Log In</button>
                     </div>
                 </div>
                 <footer>

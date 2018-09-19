@@ -1,9 +1,10 @@
 /*--------------------- Categories Styles ---------------- */
 .sheet {
-    p {
-        color: #aaaaaa;
+    h4, h5 {
+        font-weight: 500;
     }
 }
+
 .budget-list {
     display: flex;
     flex-wrap: wrap;

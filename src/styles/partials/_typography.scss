@@ -1,6 +1,7 @@
 html {
     font-size: 62.5%;
     scroll-behavior: smooth;
+    min-height: 100%;
 }
   
 select {
@@ -12,7 +13,10 @@ body {
     font-size: 1rem;
     font-family: Helvetica, sans-serif;
     letter-spacing: 0.02rem;
-    font-weight: 200;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.03;
+    
 }
   
 input[type=number]::-webkit-inner-spin-button, 
@@ -72,7 +76,7 @@ button, input[type=submit] {
     transition: opacity .3s;
 }
   
-button:hover, input[type=submit]:hover, .dark-button:hover, .button:hover {
+input[type=submit]:hover, .dark-button:hover, .button:hover {
     opacity: 0.5;
 }
 
@@ -130,10 +134,14 @@ h4, h5 {
 
 footer {
     width: 100%;
-    position: relaive;
+    position: relative;
     bottom: 0;
     text-align: center;
     font-size: 1.2rem;
     font-weight: 200;
     padding: 30px 0px;
+
+    p {
+        color: #aaaaaa;
+    }
 }

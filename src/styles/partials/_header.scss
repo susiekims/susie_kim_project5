@@ -1,9 +1,10 @@
 header {
-    width: 95%;
-    margin:  0 auto;
-    padding-top: 10px;
+    width: 100%;
+    margin:  0 auto 50px auto;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #aaaaaa;
 
     ul li {
         display: inline-block;

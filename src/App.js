@@ -33,14 +33,27 @@ class App extends Component {
     }
 
     login = () => {
-        console.log('login')
         auth.signInWithPopup(provider).then(res => {
             this.setState({
                 user: res.user,
-                redirect: true
+                showDash:true
+                // redirect: true
             })
         });
+
     }
+
+    guestLogin = () => {
+        firebase.auth().signInAnonymously().catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            swal({
+                title: 'Something went wrong',
+                text: `${errorCode} | ${errorMessage}`,
+                type: 'error',
+            })
+        });
+}
 
     logout = () => {
         swal({
@@ -106,12 +119,13 @@ class App extends Component {
                     ) }/>
 
                     <Route exact path="/" render={(props) => (
-                        <Landing {...props} login={this.login} logout={this.logout} user={this.state.user} redirect={this.state.redirect}/>
+                        <Landing {...props} guestLogin={this.guestLogin} login={this.login} logout={this.logout} user={this.state.user} redirect={this.state.redirect} />
                     ) }/>
 
-            
                 </Switch>
+
             </Router>
+
         )
     }
   
