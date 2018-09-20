@@ -82,7 +82,7 @@ class Dashboard extends Component {
                                 return (
                                     <div className="sheet-thumbnail" key={sheet.key}>
                                         <h3>{sheet.title}</h3>
-                                        <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-button-dark"><i className="fas fa-times"></i></button>
+                                        <button id={sheet.key} onClick={this.props.deleteSheet} className="delete-button-dark"><i id={sheet.key} className="fas fa-times"></i></button>
                                         <Link to={`/sheet/${sheet.title.replace(/ /g,"_")}/${sheet.key}`} id={sheet.key} className="dark-button open-sheet">Open sheet</Link>
                                     </div>
                                 )

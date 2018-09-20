@@ -221,7 +221,6 @@ class Sheet extends Component {
                     type: 'success'
                 })
                 firebase.database().ref(`users/${this.state.user.uid}/Sheets/${this.props.match.params.sheet_id}/Categories/${id}`).remove();
-                console.log(id);
             }
         }) 
     }
@@ -245,14 +244,6 @@ class Sheet extends Component {
                        {[obj[key].name] : 0}
                      ) 
                 })
-
-                // const test = Object.values(obj).map((category) => {
-                //     return ({
-                //         [category.name]: 0,
-                //     })
-                // })
-
-                // console.log(test);
 
                 let mergedTotals = Object.assign(...totalsArray);
                 this.setState({

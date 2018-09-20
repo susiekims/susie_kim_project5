@@ -22,7 +22,7 @@ class Landing extends Component {
                 <div className="welcome">
                     <div className="welcome-text">
                         <h1>BudgIt</h1>
-                        <p>Keeping track of your spending, streamlined.</p>
+                        <p>Your spending, streamlined.</p>
                         <div className="buttons">
                             <button className="landing-button" onClick={this.props.login}>Sign Up/Log In</button>
                             <button className="landing-button" onClick={this.props.guestLogin}>Try as Guest</button>

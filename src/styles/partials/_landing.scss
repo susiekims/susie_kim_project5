@@ -11,7 +11,7 @@
 .welcome {
     width: 100vw;
     height: 100vh;
-    background-image: url('./hero.png');
+    background-image: url('./hero1.jpg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -31,6 +31,7 @@
     h1 {
         font-size: 5rem;
         font-weight: 500;
+        margin-bottom: 10px;
     }
     h3 {
         font-size: 3.5rem;
@@ -87,5 +88,9 @@
 
 .try-now {
     padding: 70px 0;
+
+    .landing-button {
+        margin: 30px auto;
+    }
 }
 

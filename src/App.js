@@ -79,12 +79,14 @@ class App extends Component {
     }
 
     createNewSheet = (newSheet) => {
-        this.sheetsRef = firebase.database().ref(`users/${this.state.user.uid}/sheets`);
-        this.sheetsRef.push(newSheet);
+        firebase.database().ref(`users/${this.state.user.uid}/sheets`).push(newSheet);
+        // this.sheetsRef.push(newSheet);
     }
 
-    deleteSheet = (e) => {
-        let id = e.target.id;
+    deleteSheet = (event) => {
+        let id = event.target.id;
+        console.log(event.target);
+        console.log(id)
         swal({
             title: 'Are you sure you want delete this sheet?',
             type: 'warning',
@@ -97,8 +99,8 @@ class App extends Component {
                     title: 'Sheet deleted.',
                     type: 'success'
                 })
+                console.log(id)
                 firebase.database().ref(`users/${this.state.user.uid}/sheets/${id}`).remove();
-                console.log(id);
             }
         }) 
     }

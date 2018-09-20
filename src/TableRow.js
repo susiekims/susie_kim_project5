@@ -31,7 +31,6 @@ class TableRow extends Component {
         this.pushToFirebase(e.target.id, e.target.value, this.state);
     }
 
-
     render() {
         const categories = this.props.categories;
         return (
@@ -62,7 +61,7 @@ class TableRow extends Component {
                     <input type="text" maxLength="7" id="spent" onChange={this.handleChange} value={this.state.spent} placeholder="—"/>
                 </td>
                 <td className="col-6">
-                    <button id={this.state.key} onClick={this.props.deleteRow}><i className="fas fa-times"></i></button>
+                    <button id={this.state.key} onClick={this.props.deleteRow}><i id={this.state.key} className="fas fa-times"></i></button>
                 </td>
             </tr>
            

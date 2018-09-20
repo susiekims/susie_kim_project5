@@ -19,7 +19,6 @@ class CategoryForm extends Component {
     }
 
     handleChangeComplete = (color) => {
-        console.log(color.hex);
         this.setState({
             color: color.hex
         })
@@ -29,6 +28,7 @@ class CategoryForm extends Component {
         e.preventDefault();
         let name = document.getElementById('name').value;
         let budget = document.getElementById('budget').value;
+        console.log(name.length, budget.length, this.state.color);
         
         if (name.length > 0 && this.state.color && budget.length > 0) {
             this.props.addCategory(this.state);
@@ -37,34 +37,50 @@ class CategoryForm extends Component {
             this.setState({
                 color: null
             })
-        } else if ( name.length < 0) {
+        } 
+        
+        if ( name.length === 0) {
             swal({
                 title: 'Please give your sheet a name.',
                 type: 'error'
             })
         } else if ( this.state.color === null ) {
             swal({
-                title: 'Please give your sheet a name.',
+                title: 'Please choose a color.',
                 type: 'error'
             })
-        } else if ( budget.length < 0) {
+        } else if ( budget.length === 0) {
             swal({
-                title: 'Please enter a valid budget',
+                title: 'Please enter a budget.',
                 type: 'error'
             })
         }
     }
 
     render() {
+        const colors = [
+            '#d41a0e',
+            '#c90044',
+            '#840b9a',
+            '#491c9c',
+            '#1f329a',
+            '#0074d2',
+            '#008ea2',
+            '#2c9430',
+            '#6ba427',
+            '#ddc813',
+            '#c69500',
+            '#fe7c25',
+            '#633e2f',
+            '#646464'
+        ]
         return (
             <div className="budget-card category-form">
                 <h4>New Category</h4>
                 <form action="">
                     <input type="text" maxLength="20"  id="name" onChange={this.handleChange} placeholder="Enter Category"/>
                     <input type="number" min="0" max="999999" id="budget" onChange={this.handleChange} placeholder="Budget"/>
-                    {/* <input type="color" maxLength="6" id="color" onChange={this.handleChange} 
-                    placeholder="Choose a color" /> */}
-                    <GithubPicker onChangeComplete={this.handleChangeComplete} triangle="hide"/>
+                    <GithubPicker colors={colors} width={'100%'} onChangeComplete={this.handleChangeComplete} triangle="hide"/>
                     <input type="submit" pattern="[0-9]*" id="submit-category" value="Add Category" onClick={this.handleSubmit} className="dark-button"/>
                 </form>
             </div>
