@@ -111,27 +111,18 @@ class Sheet extends Component {
         if (obj === null) {
             obj = {};
         } 
-        // const rowArray = Object.entries(obj).map((row) => {
-        //     return ({
-        //         key: row[0],
-        //         item: row[1].item,
-        //         category: row[1].category,
-        //         date: row[1].date,
-        //         earned: row[1].earned && parseFloat(row[1].earned),
-        //         spent: row[1].spent && parseFloat(row[1].spent)
-        //     });
-        // })
 
         const rowArray = Object.keys(obj).map((key) => {
             return ({
                 key: key,
                 item: obj[key].item,
                 category: obj[key].category,
-                date: obj[key].category,
+                date: obj[key].date,
                 earned: obj[key].earned && parseFloat(obj[key].earned),
                 spent: obj[key].spent && parseFloat(obj[key].spent)
             });
         })
+
 
         this.setState({rows: rowArray}
         ,() => {
@@ -254,7 +245,7 @@ class Sheet extends Component {
                     this.getTotalBudget(categoriesArray);
                 });
             }
-        }  
+        } 
     }
 
     // placeholder function, doesn't do anything yet

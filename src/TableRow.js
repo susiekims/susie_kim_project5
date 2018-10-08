@@ -22,17 +22,18 @@ class TableRow extends Component {
 
     // function to deal with input on change
     handleChange = (e) => {
+        console.log(e.target.id, e.target.value);
         // e.target.id is the id of the element being changed
         // set the state of that target to the value being inputted
         this.setState({
             [e.target.id]: e.target.value
         })
+        console.log(this.state.date);
         // call the pushToFirebase method, pass down current state of that row
         this.pushToFirebase(e.target.id, e.target.value, this.state);
     }
 
     render() {
-        const categories = this.props.categories;
         return (
             <tr className="row">
                 <td className="col-1">
@@ -46,7 +47,7 @@ class TableRow extends Component {
                         <option value="" defaultValue="">—</option>
                         <option value="income">Income</option>
                         {
-                            categories.map((category) => {
+                            this.props.categories.map((category) => {
                                 return (
                                     <option style={{color: category.color}} key={category.key} value={category.name}>{category.name} </option>
                                 )

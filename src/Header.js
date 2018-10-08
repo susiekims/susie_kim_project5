@@ -5,7 +5,7 @@ class Header extends Component {
     render() {
         return (
             <header>
-                <h1>BudgIt</h1>
+                <Link to="/"><h1>BudgIt</h1></Link>
                 <ul>
                     <li>
                         {   this.props.user === null &&

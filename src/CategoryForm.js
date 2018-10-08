@@ -28,9 +28,8 @@ class CategoryForm extends Component {
         e.preventDefault();
         let name = document.getElementById('name').value;
         let budget = document.getElementById('budget').value;
-        console.log(name.length, budget.length, this.state.color);
         
-        if (name.length > 0 && this.state.color && budget.length > 0) {
+        if (name.length > 0 && this.state.color && budget.length > 0 && budget <= 999999) {
             this.props.addCategory(this.state);
             document.getElementById('name').value = '';
             document.getElementById('budget').value = '';
@@ -38,7 +37,7 @@ class CategoryForm extends Component {
                 color: null
             })
         } 
-        
+    
         if ( name.length === 0) {
             swal({
                 title: 'Please give your sheet a name.',
@@ -52,6 +51,11 @@ class CategoryForm extends Component {
         } else if ( budget.length === 0) {
             swal({
                 title: 'Please enter a budget.',
+                type: 'error'
+            })
+        } else if (budget > 999999) {
+            swal({
+                title: 'Please enter a lower budget.',
                 type: 'error'
             })
         }
@@ -79,7 +83,7 @@ class CategoryForm extends Component {
                 <h4>New Category</h4>
                 <form action="">
                     <input type="text" maxLength="20"  id="name" onChange={this.handleChange} placeholder="Enter Category"/>
-                    <input type="number" min="0" max="999999" id="budget" onChange={this.handleChange} placeholder="Budget"/>
+                    <input type="number" min="1" max="5" id="budget" onChange={this.handleChange} placeholder="Budget"/>
                     <GithubPicker colors={colors} width={'100%'} onChangeComplete={this.handleChangeComplete} triangle="hide"/>
                     <input type="submit" pattern="[0-9]*" id="submit-category" value="Add Category" onClick={this.handleSubmit} className="dark-button"/>
                 </form>
