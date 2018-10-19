@@ -1,13 +1,9 @@
 # Budgit
 A simple, no-nonsense expense tracker. [View live here](https://expense-tracker-v2.firebaseapp.com/).
 
----
-
 ## Getting started
 Clone or download a copy of this repo to your local machine, and install dependencies.
 ```npm install``
-
----
 
 ## Component Breakdown
 ### Budget.js
