@@ -1,147 +1,154 @@
 html {
-    font-size: 62.5%;
-    scroll-behavior: smooth;
-    min-height: 100%;
-}
-  
-select {
-    border: none;
-    appearance: none;
-}
-  
-body {
-    font-size: 1rem;
-    font-family: Helvetica, sans-serif;
-    letter-spacing: 0.02rem;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    letter-spacing: 0.03;
-    
-}
-  
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  min-height: 100%;
 }
 
-input[type=number] {
-    -moz-appearance:textfield;
+select {
+  border: none;
+  appearance: none;
+}
+
+body {
+  font-size: 1rem;
+  font-family: Helvetica, sans-serif;
+  letter-spacing: 0.02rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.03;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .button {
-    text-align: center;
-    display: block;
-    font-size: 1.2rem;
-    color: #898989;
-    border: 1px solid #aaaaaa;
-    background: none;
-    border-radius: 1.5rem;
-    padding: 5px 10px;
-    cursor: pointer;
+  text-align: center;
+  display: block;
+  font-size: 1.2rem;
+  color: #898989;
+  border: 1px solid #aaaaaa;
+  background: none;
+  border-radius: 1.5rem;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .dark-button {
-    text-align: center;
-    display: block;
-    border-radius: 1.8rem;
-    width: auto;
-    margin: 25px auto 0px auto;
-    padding: 8px 10px;
-    border: none;
-    font-size: 1.2rem;
-    background: #888888;
-    color: white;
-    font-weight: 200;
-    cursor: pointer;
+  text-align: center;
+  display: block;
+  border-radius: 1.8rem;
+  width: auto;
+  margin: 25px auto 0px auto;
+  padding: 8px 10px;
+  border: none;
+  font-size: 1.2rem;
+  background: #888888;
+  color: white;
+  font-weight: 200;
+  cursor: pointer;
 }
 
-input[type=submit] {
-    width: auto;
-    padding: 8px 10px;
-    border: none;
-    font-size: 1.2rem;
-    background: #888888;
-    color: white;
-    font-weight: 200;
+input[type="submit"] {
+  width: auto;
+  padding: 8px 10px;
+  border: none;
+  font-size: 1.2rem;
+  background: #888888;
+  color: white;
+  font-weight: 200;
 }
 
-button, input[type=submit] {
-    transition: opacity .3s;
+button,
+input[type="submit"] {
+  transition: opacity 0.3s;
 }
-  
-input[type=submit]:hover, .dark-button:hover, .button:hover {
-    opacity: 0.5;
+
+input[type="submit"]:hover,
+.dark-button:hover,
+.button:hover {
+  opacity: 0.5;
 }
 
 section {
-    max-width: 1000px;
-    width: 90%;
-    margin: 0 auto;
-    padding: 50px 0px;
-    border-bottom: 1px solid #aaaaaa;
+  max-width: 1000px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 50px 0px;
+  border-bottom: 1px solid #aaaaaa;
 }
 
-h1, h2, h3, h4, h5 {
-    font-weight: 200;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 200;
 }
 
 h2 {
-    font-size: 2.6rem;
-    color: #aaaaaa;
+  font-size: 2.6rem;
+  color: #aaaaaa;
 }
 
 h3 {
-    font-size: 2.6rem;
+  font-size: 2.6rem;
 }
 
-h4, h5 {
-    font-size: 1.2rem;
+h4,
+h5 {
+  font-size: 1.2rem;
 }
 
 .fade {
-    animation-name: opening;
-    animation-duration: 1s;
-    animation-fill-mode: both;
+  animation-name: opening;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }
 
 @keyframes opening {
-    0% {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0px);
-        opacity: 1;
-    }
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }
 
 .title {
-    display: block;
-    font-size: 3rem;
-    border: none;
-    text-align: center;
-    margin: 0 auto;
-    // padding-top: 50px;
-    color: black;
+  display: block;
+  font-size: 3rem;
+  border: none;
+  text-align: center;
+  margin: 0 auto;
+  // padding-top: 50px;
+  color: black;
 }
 
 footer {
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 200;
-    padding: 30px 0px;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 200;
+  padding: 30px 0px;
 
-    p {
-        color: #aaaaaa;
-    }
+  p {
+    color: #aaaaaa;
+  }
 }

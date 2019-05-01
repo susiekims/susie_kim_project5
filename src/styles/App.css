@@ -150,12 +150,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.03; }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0; }
 
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield; }
 
 a {
@@ -188,7 +188,7 @@ a {
   font-weight: 200;
   cursor: pointer; }
 
-input[type=submit] {
+input[type="submit"] {
   width: auto;
   padding: 8px 10px;
   border: none;
@@ -197,10 +197,13 @@ input[type=submit] {
   color: white;
   font-weight: 200; }
 
-button, input[type=submit] {
-  transition: opacity .3s; }
+button,
+input[type="submit"] {
+  transition: opacity 0.3s; }
 
-input[type=submit]:hover, .dark-button:hover, .button:hover {
+input[type="submit"]:hover,
+.dark-button:hover,
+.button:hover {
   opacity: 0.5; }
 
 section {
@@ -210,7 +213,11 @@ section {
   padding: 50px 0px;
   border-bottom: 1px solid #aaaaaa; }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-weight: 200; }
 
 h2 {
@@ -220,7 +227,8 @@ h2 {
 h3 {
   font-size: 2.6rem; }
 
-h4, h5 {
+h4,
+h5 {
   font-size: 1.2rem; }
 
 .fade {
@@ -378,8 +386,15 @@ header {
   position: relative;
   overflow: hidden; }
 
+.dashboard {
+  min-height: 100vh; }
+
+.dashboard footer {
+  position: absolute; }
+
 /*--------------------- Categories Styles ---------------- */
-.sheet h4, .sheet h5 {
+.sheet h4,
+.sheet h5 {
   font-weight: 500; }
 
 .budget-list {
@@ -396,7 +411,7 @@ header {
   padding: 20px;
   border-radius: 1.5rem;
   position: relative;
-  overflow-y: scroll; }
+  overflow-y: hidden; }
 
 .delete-button, .delete-button-dark {
   position: absolute;
@@ -433,6 +448,14 @@ header {
   color: #aaaaaa;
   border: 1px solid #aaaaaa; }
 
+.github-picker {
+  width: 100%; }
+
+.github-picker span {
+  width: calc(100% / 7); }
+  .github-picker span div {
+    width: 100% !important; }
+
 input {
   font-size: 1.8rem;
   border: none;
@@ -444,12 +467,12 @@ input {
   margin: 10px auto;
   padding: 8px 0px; }
 
-input[type=color] {
+input[type="color"] {
   background: none;
   padding: 5px 12px;
   height: 35px; }
 
-input[type=submit] {
+input[type="submit"] {
   width: auto;
   padding: 8px 10px;
   border: none;
@@ -464,7 +487,7 @@ table {
   margin: 0 auto;
   max-width: 1000px;
   min-width: 500px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   padding: 25px 0; }
 
 table #category {
@@ -497,13 +520,19 @@ table button {
 .row input::placeholder {
   color: #aaaaaa; }
 
-.row input[type=date], .row select {
-  width: 100px;
+.row input[type="date"],
+.row select {
+  width: 120px;
   margin: 0; }
 
 th {
   text-align: left;
-  padding: 25px 0px; }
+  padding: 25px 0px;
+  font-weight: 400; }
+
+th.money {
+  text-align: right;
+  padding-right: 20px; }
 
 td {
   padding: 15px 0px; }
@@ -514,11 +543,19 @@ tr {
 tr:last-child {
   border-bottom: none; }
 
-.col-1, .col-2 {
+.col-1,
+.col-2 {
   width: 25%; }
 
-.col-3, .col-4, .col-5 {
+.col-3,
+.col-4,
+.col-5 {
   width: 16.7%; }
+
+.col-4 > input,
+.col-5 > input {
+  text-align: right;
+  width: 80px; }
 
 .col-6 {
   width: 3%; }
@@ -561,7 +598,8 @@ tr:last-child {
 .chart canvas {
   width: 100%; }
 
-.chart h2, .summary h2 {
+.chart h2,
+.summary h2 {
   padding-bottom: 20px; }
 
 /*------------ Footer Styles ------------*/

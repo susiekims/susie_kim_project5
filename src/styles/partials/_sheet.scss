@@ -1,235 +1,258 @@
 /*--------------------- Categories Styles ---------------- */
 .sheet {
-    h4, h5 {
-        font-weight: 500;
-    }
+  h4,
+  h5 {
+    font-weight: 500;
+  }
 }
 
 .budget-list {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 25px 0px 0px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 25px 0px 0px 0px;
 }
-  
+
 .budget-card {
-    color: white;
-    margin: 0px 10px 15px 10px;
-    min-width: 200px;
-    height: 300px;
-    flex: 0 0 calc(100% / 4 - 20px);
-    padding: 20px;
-    border-radius: 1.5rem;
-    position: relative;
-    overflow-y: scroll;
+  color: white;
+  margin: 0px 10px 15px 10px;
+  min-width: 200px;
+  height: 300px;
+  flex: 0 0 calc(100% / 4 - 20px);
+  padding: 20px;
+  border-radius: 1.5rem;
+  position: relative;
+  overflow-y: hidden;
 }
 
 .delete-button {
-    position: absolute;
-    font-size: 2rem;
-    border: none;
-    color: white;
-    background: none;
-    top: 10px;
-    right: 10px;
+  position: absolute;
+  font-size: 2rem;
+  border: none;
+  color: white;
+  background: none;
+  top: 10px;
+  right: 10px;
 }
 
 .delete-button-dark {
-    @extend .delete-button;
-    color: black;
+  @extend .delete-button;
+  color: black;
 }
 
 .budget-card h3 {
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.38);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.38);
 }
 
 .budget li p {
-    color: white;
-    width: 40%;
+  color: white;
+  width: 40%;
 }
 
 .budget li p:last-child {
-    width: 20%;
+  width: 20%;
 }
 
 .budget-card h4 {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .budget-card h5 {
-    font-style: italic;
+  font-style: italic;
 }
 
 .category-form {
-    background: white;
-    color: #aaaaaa;
-    border: 1px solid #aaaaaa;
+  background: white;
+  color: #aaaaaa;
+  border: 1px solid #aaaaaa;
+}
+
+.github-picker {
+  width: 100%;
+}
+
+.github-picker span {
+  width: calc(100% / 7);
+
+  div {
+    width: 100% !important;
+  }
 }
 
 input {
-    font-size: 1.8rem;
-    border: none;
-    border: 1px solid #aaaaaa; 
-    border-radius: 1.8rem;
-    text-align: center;
-    display: block;
-    width: 90%;
-    margin: 10px auto;
-    padding: 8px 0px;
+  font-size: 1.8rem;
+  border: none;
+  border: 1px solid #aaaaaa;
+  border-radius: 1.8rem;
+  text-align: center;
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 8px 0px;
 }
 
-input[type=color] {
-    background: none;
-    padding: 5px 12px;
-    height: 35px;
+input[type="color"] {
+  background: none;
+  padding: 5px 12px;
+  height: 35px;
 }
 
-input[type=submit] {
-    width: auto;
-    padding: 8px 10px;
-    border: none;
-    font-size: 1.2rem;
-    background: #888888;
-    color: white;
-    font-weight: 200;
+input[type="submit"] {
+  width: auto;
+  padding: 8px 10px;
+  border: none;
+  font-size: 1.2rem;
+  background: #888888;
+  color: white;
+  font-weight: 200;
 }
 
 /* ------------------ Table Styles ------------------*/
 
 table {
-    width: 95%;
-    margin: 0 auto;
-    max-width: 1000px;
-    min-width: 500px;
-    font-size: 1.2rem;
-    padding: 25px 0
+  width: 95%;
+  margin: 0 auto;
+  max-width: 1000px;
+  min-width: 500px;
+  font-size: 1.5rem;
+  padding: 25px 0;
 }
 
-
 table #category {
-    background-image:url(./sort-down-solid.svg);
-    background-repeat: no-repeat;
-    background-position: 100% -5px;
+  background-image: url(./sort-down-solid.svg);
+  background-repeat: no-repeat;
+  background-position: 100% -5px;
 }
 
 table button {
-    border: none;
-    background: none;
+  border: none;
+  background: none;
 }
-  
+
 .add-row {
-    display: block;
-    border-radius: 1.8rem;
-    width: auto;
-    margin: 25px auto 0px auto;
-    padding: 8px 10px;
-    border: none;
-    font-size: 1.2rem;
-    background: #888888;
-    color: white;
-    font-weight: 200;
+  display: block;
+  border-radius: 1.8rem;
+  width: auto;
+  margin: 25px auto 0px auto;
+  padding: 8px 10px;
+  border: none;
+  font-size: 1.2rem;
+  background: #888888;
+  color: white;
+  font-weight: 200;
 }
-  
+
 .row input {
-    font-size: 1.2rem;
-    text-align: left;
-    border: none;
-    width: 100%;
+  font-size: 1.2rem;
+  text-align: left;
+  border: none;
+  width: 100%;
 }
 
 .row input::placeholder {
-    color: #aaaaaa;
+  color: #aaaaaa;
 }
 
-.row input[type=date], .row select {
-    width: 100px;
-    margin: 0;
+.row input[type="date"],
+.row select {
+  width: 120px;
+  margin: 0;
 }
-  
+
 th {
-    text-align: left;
-    padding: 25px 0px;
+  text-align: left;
+  padding: 25px 0px;
+  font-weight: 400;
+}
+
+th.money {
+  text-align: right;
+  padding-right: 20px;
 }
 
 td {
-    padding: 15px 0px;
-    
+  padding: 15px 0px;
 }
 
 tr {
-    border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 tr:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
-.col-1, .col-2,{
-    width: 25%;
+.col-1,
+.col-2 {
+  width: 25%;
 }
 
-.col-3, .col-4, .col-5 { 
-    width: 16.7%;
+.col-3,
+.col-4,
+.col-5 {
+  width: 16.7%;
+}
+
+.col-4 > input,
+.col-5 > input {
+  text-align: right;
+  width: 80px;
 }
 
 .col-6 {
-    width: 3%;
+  width: 3%;
 }
-
 
 /* -------------- Summary Styles -------------- */
 
 .summary-container {
-    display: flex;
-    align-items: flex-start;
-    margin: 0 auto;
-    justify-content: space-between;
-    border: none;
-    padding: 0;
+  display: flex;
+  align-items: flex-start;
+  margin: 0 auto;
+  justify-content: space-between;
+  border: none;
+  padding: 0;
 }
 
 .summary-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .summary-card {
-    background: #f1f1f1;
-    flex: 0 0 calc(50% - 10px);
-    border-radius: 1.5rem;
-    padding: 20px;
-    margin-bottom: 10px;
-    text-align: center;
+  background: #f1f1f1;
+  flex: 0 0 calc(50% - 10px);
+  border-radius: 1.5rem;
+  padding: 20px;
+  margin-bottom: 10px;
+  text-align: center;
 }
-  
+
 .summary h5 {
-    text-align: center;
-    padding: 20px 0px;
+  text-align: center;
+  padding: 20px 0px;
 }
 
 .chart {
-    padding: 40px 0px;
-    width: 50%;
-    border-right: 1px solid #aaaaaa;
+  padding: 40px 0px;
+  width: 50%;
+  border-right: 1px solid #aaaaaa;
 }
 
 .summary {
-    width: 50%;
-    padding: 40px 0px 40px 40px;
+  width: 50%;
+  padding: 40px 0px 40px 40px;
 }
 
 .chart canvas {
-    width: 100%;
+  width: 100%;
 }
-  
-.chart h2, .summary h2 {
-    padding-bottom: 20px;
-}
-  
 
+.chart h2,
+.summary h2 {
+  padding-bottom: 20px;
+}
 
 /*------------ Footer Styles ------------*/
-
-

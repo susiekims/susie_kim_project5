@@ -1,45 +1,51 @@
 .dashboard-wrapper {
-    max-width: 1000px;
-    width: 90%;
-    margin: 50px auto;
+  max-width: 1000px;
+  width: 90%;
+  margin: 50px auto;
 
-    h1 {
-        margin-bottom: 10px;
-    }
+  h1 {
+    margin-bottom: 10px;
+  }
 
-    h3 {
-        margin-top: 10px;
-    }
+  h3 {
+    margin-top: 10px;
+  }
 
-    .open-sheet {
-        width: 100px;
-    }
+  .open-sheet {
+    width: 100px;
+  }
 
-    .dark-button {
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+  .dark-button {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .sheet-list {
-    display: flex;
-    flex-wrap: wrap;  
-    margin: 50px 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 50px 0;
 }
 
 .sheet-thumbnail {
-    flex: 0 0 calc(100% / 4 - 20px);
-    height: 200px;
-    min-width: 200px;
-    border: 1px solid black;
-    text-align: center;
-    padding: 30px;
-    margin: 0px 10px 15px 10px;
-    border-radius: 1.5rem;
-    position: relative;
-    overflow: hidden;
+  flex: 0 0 calc(100% / 4 - 20px);
+  height: 200px;
+  min-width: 200px;
+  border: 1px solid black;
+  text-align: center;
+  padding: 30px;
+  margin: 0px 10px 15px 10px;
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
+.dashboard {
+  min-height: 100vh;
+}
 
+.dashboard footer {
+  position: absolute;
+}
